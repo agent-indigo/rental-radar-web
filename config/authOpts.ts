@@ -2,11 +2,13 @@ import {
   AuthOptions,
   Session
 } from 'next-auth'
+import {Model} from 'sequelize'
 import userSqlModel from '@/models/userSqlModel'
 import SignInParams from '@/types/SignInParams'
 import connectToSqlDb from '@/utilities/connectToSqlDb'
-import Google, { GoogleProfile } from 'next-auth/providers/google'
+import Google, {GoogleProfile} from 'next-auth/providers/google'
 import SessionParams from '@/types/SessionParams'
+import UserSqlRecord from '@/types/UserSqlRecord'
 const authOpts: AuthOptions = {
   providers: [
     Google<GoogleProfile>({
@@ -23,21 +25,24 @@ const authOpts: AuthOptions = {
   ],
   callbacks: {
     signIn: async (params: SignInParams): Promise<boolean> => {
-      const {profile}: any = params
+      const {profile}: SignInParams = params
       await connectToSqlDb()
-      const user: any = await userSqlModel.findOne({
+      const user: Model<UserSqlRecord> | null = await userSqlModel.findOne({
         where: {
-          email: profile.email
+          email: profile?.email
         }
       })
       if (user) {
-        user.image = profile.picture
+        user.set(
+          'image',
+          profile?.image
+        )
         await user.save()
       } else {
         await userSqlModel.create({
-          email: profile.email,
-          username: profile.name,
-          image: profile.picture,
+          email: profile?.email ?? '',
+          username: profile?.name ?? '',
+          image: profile?.image,
           role: await userSqlModel.findOne({
             where: {
               role: 'root'
@@ -54,7 +59,7 @@ const authOpts: AuthOptions = {
     },
     session: async (params: SessionParams): Promise<Session> => {
       const {session}: SessionParams = params
-      const {user}: any = session
+      const {user}: Session = session
       return {
         ...session,
         user
