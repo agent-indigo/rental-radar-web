@@ -1,9 +1,9 @@
 version: '3.8'
 services:
-  PropertyPulse:
+  RentalRadar:
     build:
       context: .
       dockerfile: Dockerfile
-    image: PropertyPulse:latest
+    image: RentalRadar:latest
     ports:
       - "3000:3000"

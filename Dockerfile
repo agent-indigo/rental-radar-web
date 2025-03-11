@@ -1,5 +1,5 @@
 FROM node:latest
-WORKDIR /PropertyPulse
+WORKDIR /RentalRadar
 COPY . .
 RUN npm i
 RUN npm cache clean -f
