@@ -25,7 +25,7 @@ const authOpts: AuthOptions = {
   ],
   callbacks: {
     signIn: async (params: SignInParams): Promise<boolean> => {
-      const {profile}: SignInParams = params
+      const {profile}: any = params
       await connectToSqlDb()
       const user: Model<UserSqlRecord> | null = await userSqlModel.findOne({
         where: {
@@ -35,14 +35,14 @@ const authOpts: AuthOptions = {
       if (user) {
         user.set(
           'image',
-          profile?.image
+          profile?.picture
         )
         await user.save()
       } else {
         await userSqlModel.create({
           email: profile?.email ?? '',
           username: profile?.name ?? '',
-          image: profile?.image,
+          image: profile?.picture,
           role: await userSqlModel.findOne({
             where: {
               role: 'root'
@@ -52,19 +52,13 @@ const authOpts: AuthOptions = {
           advertisedVehicles: [],
           bookmarkedEstates: [],
           bookmarkedVehicles: [],
+          invoices: [],
           payments: []
         })
       }
       return true
     },
-    session: async (params: SessionParams): Promise<Session> => {
-      const {session}: SessionParams = params
-      const {user}: Session = session
-      return {
-        ...session,
-        user
-      }
-    }
+    session: async (params: SessionParams): Promise<Session> => params.session
   }
 }
 export default authOpts
