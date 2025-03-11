@@ -8,5 +8,6 @@ export default interface UserSqlRecord extends SqlRecord {
   advertisedVehicles: string[]
   bookmarkedEstates: string[]
   bookmarkedVehicles: string[]
+  invoices: string[]
   payments: string[]
 }

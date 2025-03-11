@@ -66,6 +66,13 @@ const userSqlModel: ModelStatic<Model<UserSqlRecord>> = sequelize.models.User ??
         key: 'id'
       }
     },
+    invoices: {
+      type: [DataTypes.STRING],
+      references: {
+        model: 'Invoice',
+        key: 'id'
+      }
+    },
     payments: {
       type: [DataTypes.STRING],
       references: {

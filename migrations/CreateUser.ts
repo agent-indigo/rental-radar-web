@@ -65,6 +65,13 @@ export const up = async (queryInterface: QueryInterface): Promise<void> => await
         key: 'id'
       }
     },
+    invoices: {
+      type: [DataTypes.STRING],
+      references: {
+        model: 'Invoice',
+        key: 'id'
+      }
+    },
     payments: {
       type: [DataTypes.STRING],
       references: {
