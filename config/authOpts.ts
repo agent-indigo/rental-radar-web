@@ -33,11 +33,13 @@ const authOpts: AuthOptions = {
         }
       })
       if (user) {
-        user.set(
-          'image',
-          profile?.picture
-        )
-        await user.save()
+        if (user.get('image') !== profile.picture) {
+          user.set(
+            'image',
+            profile?.picture
+          )
+          await user.save()
+        }
       } else {
         await userSqlModel.create({
           email: profile?.email ?? '',
