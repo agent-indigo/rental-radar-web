@@ -39,42 +39,42 @@ const userSqlModel: ModelStatic<Model<UserSqlRecord>> = sequelize.models.User ??
       defaultValue: 'user'
     },
     advertisedEstates: {
-      type: [DataTypes.STRING],
+      type: DataTypes.ARRAY(DataTypes.UUID),
       references: {
         model: 'Estate',
         key: 'id'
       }
     },
     advertisedVehicles: {
-      type: [DataTypes.STRING],
+      type: DataTypes.ARRAY(DataTypes.UUID),
       references: {
         model: 'Vehicle',
         key: 'id'
       }
     },
     bookmarkedEstates: {
-      type: [DataTypes.STRING],
+      type: DataTypes.ARRAY(DataTypes.UUID),
       references: {
         model: 'Estate',
         key: 'id'
       }
     },
     bookmarkedVehicles: {
-      type: [DataTypes.STRING],
+      type: DataTypes.ARRAY(DataTypes.UUID),
       references: {
         model: 'Vehicle',
         key: 'id'
       }
     },
     invoices: {
-      type: [DataTypes.STRING],
+      type: DataTypes.ARRAY(DataTypes.UUID),
       references: {
         model: 'Invoice',
         key: 'id'
       }
     },
     payments: {
-      type: [DataTypes.STRING],
+      type: DataTypes.ARRAY(DataTypes.UUID),
       references: {
         model: 'Payment',
         key: 'id'
