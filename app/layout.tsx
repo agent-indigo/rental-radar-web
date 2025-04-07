@@ -1,5 +1,6 @@
 import {
   FunctionComponent,
+  PropsWithChildren,
   ReactElement
 } from 'react'
 import {Metadata} from 'next'
@@ -9,15 +10,14 @@ import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import '@/assets/styles.css'
 import AuthProvider from '@/components/AuthProvider'
-import GlobalContextProvider from '@/components/GlobalContextProvider'
-import Children from '@/types/Children'
+import ContextProvider from '@/components/ContextProvider'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 const inter: NextFont = Inter({subsets: ['latin']})
 export const metadata: Metadata = {}
-const RootLayout: FunctionComponent<Children> = ({children}): ReactElement => (
+const RootLayout: FunctionComponent<PropsWithChildren> = ({children}): ReactElement => (
   <AuthProvider>
-    <GlobalContextProvider>
+    <ContextProvider>
       <html lang='en'>
         <body className={inter.className}>
           <Header/>
@@ -28,7 +28,7 @@ const RootLayout: FunctionComponent<Children> = ({children}): ReactElement => (
           <ToastContainer/>
         </body>
       </html>
-    </GlobalContextProvider>
+    </ContextProvider>
   </AuthProvider>
 )
 export default RootLayout

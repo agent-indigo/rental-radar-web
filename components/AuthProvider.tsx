@@ -1,11 +1,11 @@
 'use client'
 import {
   FunctionComponent,
+  PropsWithChildren,
   ReactElement
 } from 'react'
 import {SessionProvider} from 'next-auth/react'
-import Children from '@/types/Children'
-const AuthProvider: FunctionComponent<Children> = ({
+const AuthProvider: FunctionComponent<PropsWithChildren> = ({
   children
 }): ReactElement => (
   <SessionProvider>

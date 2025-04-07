@@ -1,4 +1,4 @@
 import UserSqlRecord from '@/types/UserSqlRecord'
-export default interface State {
+export default interface ContextProps {
   user?: UserSqlRecord
 }

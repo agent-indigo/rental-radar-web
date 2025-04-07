@@ -3,16 +3,16 @@ import {
   Context,
   createContext,
   FunctionComponent,
+  PropsWithChildren,
   ReactElement,
   useContext,
   useEffect,
   useState
-} from "react"
-import State from "@/types/State"
-import Children from "@/types/Children"
-import UserSqlRecord from "@/types/UserSqlRecord"
-const GlobalContext: Context<State> = createContext<State>({})
-const GlobalContextProvider: FunctionComponent<Children> = ({children}): ReactElement => {
+} from 'react'
+import ContextProps from '@/types/ContextProps'
+import UserSqlRecord from '@/types/UserSqlRecord'
+const AppContext: Context<ContextProps> = createContext<ContextProps>({})
+const ContextProvider: FunctionComponent<PropsWithChildren> = ({children}): ReactElement => {
   const [
     user,
     setUser
@@ -25,12 +25,12 @@ const GlobalContextProvider: FunctionComponent<Children> = ({children}): ReactEl
     getUser()
   }, [])
   return (
-    <GlobalContext.Provider value={{
+    <AppContext.Provider value={{
       user
     }}>
       {children}
-    </GlobalContext.Provider>
+    </AppContext.Provider>
   )
 }
-export const useGlobalContext: Function = (): State => useContext<State>(GlobalContext)
-export default GlobalContextProvider
+export const useGetContext: Function = (): ContextProps => useContext<ContextProps>(AppContext)
+export default ContextProvider
