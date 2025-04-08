@@ -25,9 +25,5 @@ for (const file of fs.readdirSync(new URL(
   ))
   db[model.default.name] = model.default
 }
-for (const modelName of Object.keys(db)) {
-  if (db[modelName].associate) {
-    db[modelName].associate(db)
-  }
-}
+for (const modelName of Object.keys(db)) db[modelName].associate && db[modelName].associate(db)
 export default db
