@@ -30,8 +30,8 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
         }
       })
       return user ? success200response({
-        id: user.get('id'),
-        image: user.get('image')
+        id: user.getDataValue('id'),
+        image: user.getDataValue('image')
       }) : error401response
     } else {
       return error401response

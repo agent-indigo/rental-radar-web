@@ -33,8 +33,8 @@ const authOpts: AuthOptions = {
         }
       })
       if (user) {
-        if (user.get('image') !== profile.picture) {
-          user.set(
+        if (user.getDataValue('image') !== profile.picture) {
+          user.setDataValue(
             'image',
             profile?.picture
           )
