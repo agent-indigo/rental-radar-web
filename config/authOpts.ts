@@ -1,13 +1,9 @@
-import {
-  AuthOptions,
-  Session
-} from 'next-auth'
+import {AuthOptions} from 'next-auth'
 import {Model} from 'sequelize'
 import userSqlModel from '@/models/userSqlModel'
 import SignInParams from '@/types/SignInParams'
 import connectToSqlDb from '@/utilities/connectToSqlDb'
 import Google, {GoogleProfile} from 'next-auth/providers/google'
-import SessionParams from '@/types/SessionParams'
 import UserSqlRecord from '@/types/UserSqlRecord'
 const authOpts: AuthOptions = {
   providers: [
@@ -59,8 +55,7 @@ const authOpts: AuthOptions = {
         })
       }
       return true
-    },
-    session: (params: SessionParams): Session => params.session
+    }
   }
 }
 export default authOpts
