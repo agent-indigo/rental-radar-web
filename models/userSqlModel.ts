@@ -85,14 +85,14 @@ const userSqlModel: ModelStatic<Model<UserSqlRecord>> = sequelize.models.User ??
     timestamps: true,
     hooks: {
       beforeCreate: async (user: Model<UserSqlRecord>): Promise<void> => {
-        if (user.get('role') === 'root') if (await userSqlModel.findOne({
+        if (user.getDataValue('role') === 'root') if (await userSqlModel.findOne({
           where: {
             role: 'root'
           }
         })) throw new Error('The root user already exists.')
       },
       beforeDestroy: (user: Model<UserSqlRecord>): void => {
-        if (user.get('role') === 'root') throw new Error('The root user shouldn\'t be deleted.')
+        if (user.getDataValue('role') === 'root') throw new Error('The root user shouldn\'t be deleted.')
       }
     }
   }
