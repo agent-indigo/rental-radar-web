@@ -4,7 +4,7 @@ const connectToSqlDb: Function = async (): Promise<void> => {
   if (!connected) try {
     await sequelize.authenticate()
     connected = true
-    console.log('Sequelize successfully connected.')
+    console.log('PostgreSQL successfully connected.')
     await sequelize.sync()
     console.log('Schema successfully synchronized.')
   } catch (error: any) {
