@@ -1,9 +1,9 @@
 version: '3.8'
 services:
-  RentalRadar:
+  rental-radar-web:
     build:
       context: .
       dockerfile: Dockerfile
-    image: RentalRadar:latest
+    image: rental-radar-web:latest
     ports:
       - "3000:3000"

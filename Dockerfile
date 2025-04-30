@@ -1,9 +1,5 @@
 FROM node:latest
-WORKDIR /RentalRadar
-COPY . .
-RUN npm i
-RUN npm cache clean -f
-RUN sudo npm cache clean -f
-RUN npm run build
+WORKDIR /rental-radar-web
+COPY ./.next/standalone/. .
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD ["node", "server.js"]

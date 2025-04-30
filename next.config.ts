@@ -14,6 +14,9 @@ const nextConfig: NextConfig = {
       hostname: 'lh3.googleusercontent.com',
       pathname: '**'
     }]
-  }
+  },
+  output: process.env.VERCEL_URL ? undefined : 'standalone',
+  reactStrictMode: true,
+  generateBuildId: (): string => `rental-radar-web-${Date.now()}`
 }
 export default nextConfig
