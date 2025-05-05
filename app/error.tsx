@@ -20,12 +20,16 @@ const ErrorPage: FunctionComponent<ErrorPageProps> = ({
       <p>
         {message}
       </p>
-      <h2>
-        Stack
-      </h2>
-      <p>
-        {stack}
-      </p>
+      {process.env.NODE_ENV === 'development' && (
+        <>
+          <h2>
+            Stack
+          </h2>
+          <p>
+            {stack}
+          </p>
+        </>
+      )}
       <button onClick={(): void => reset()}>
         Retry
       </button>
