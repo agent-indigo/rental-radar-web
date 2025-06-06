@@ -11,17 +11,17 @@ const url: URL = new URL(
   '.',
   import.meta.url
 )
-for (const file of fs.readdirSync(url).filter((fileName: String): boolean => (
+fs.readdirSync(url).filter((fileName: String): boolean => (
   fileName.indexOf('.') !== 0 &&
   fileName !== path.basename(url.toString()) &&
   fileName.slice(-11) === 'SqlModel.ts' &&
   fileName.indexOf('.test') === -1
-))) {
+)).map(async (file: string): Promise<void> => {
   const model: any = await import(path.join(
     url.toString(),
     file
   ))
   db[model.default.name] = model.default
-}
-for (const modelName of Object.keys(db)) db[modelName].associate && db[modelName].associate(db)
+})
+Object.keys(db).map((modelName: string): void => db[modelName].associate && db[modelName].associate(db))
 export default db
