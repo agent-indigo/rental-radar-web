@@ -4,6 +4,8 @@ import {
 } from 'crypto'
 import {betterAuth} from 'better-auth'
 import {Pool} from 'pg'
+import connectToSqlDb from '@/utilities/connectToSqlDb'
+import userSqlModel from '@/models/userSqlModel'
 const authentication = betterAuth({
   account: {
     modelName: 'accounts'
@@ -20,6 +22,28 @@ const authentication = betterAuth({
     host: process.env.SQL_DB_HOST ?? 'localhost',
     port: parseInt(process.env.SQL_DB_PORT ?? '5432')
   }),
+  databaseHooks: {
+    user: {
+      create: {
+        before: async (user): Promise<boolean> => {
+          await connectToSqlDb()
+          if (await userSqlModel.count({
+            where: {
+              role: 'root'
+            }
+          }) > 0) {
+            return false
+          } else {
+            user.role = 'root'
+            return true
+          }
+        }
+      },
+      delete: {
+        before: async (user): Promise<boolean> => !(user.role === 'root')
+      }
+    }
+  },
   session: {
     modelName: 'sessions'
   },
