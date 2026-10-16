@@ -6,7 +6,7 @@ import {
 import {Verification} from 'better-auth'
 import createId from '@/utilities/createId'
 import sequelize from '@/configuration/sequelize'
-const verificationSqlModel: ModelStatic<Model<Verification>> = sequelize.models.Verification ?? sequelize.define<Model<Verification>>(
+const verificationSqlModel: ModelStatic<Model<Verification>> = sequelize.models.Verification ?? sequelize.define(
   'Verification', {
     ...createId(),
     identifier: {

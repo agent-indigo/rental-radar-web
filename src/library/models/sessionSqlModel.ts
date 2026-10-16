@@ -6,7 +6,7 @@ import {
 import {Session} from 'better-auth'
 import createId from '@/utilities/createId'
 import sequelize from '@/configuration/sequelize'
-const sessionSqlModel: ModelStatic<Model<Session>> = sequelize.models.Session ?? sequelize.define<Model<Session>>(
+const sessionSqlModel: ModelStatic<Model<Session>> = sequelize.models.Session ?? sequelize.define(
   'Session', {
     ...createId(),
     userId: {

@@ -6,7 +6,7 @@ import {
 import {Account} from 'better-auth'
 import createId from '@/utilities/createId'
 import sequelize from '@/configuration/sequelize'
-const accountSqlModel: ModelStatic<Model<Account>> = sequelize.models.Account ?? sequelize.define<Model<Account>>(
+const accountSqlModel: ModelStatic<Model<Account>> = sequelize.models.Account ?? sequelize.define(
   'Account', {
     ...createId(),
     userId: {

@@ -7,7 +7,7 @@ import createId from '@/utilities/createId'
 import sequelize from '@/configuration/sequelize'
 import User from '@/types/User'
 import connectToSqlDb from '@/utilities/connectToSqlDb'
-const userSqlModel: ModelStatic<Model<User>> = sequelize.models.User ?? sequelize.define<Model<User>>(
+const userSqlModel: ModelStatic<Model<User>> = sequelize.models.User ?? sequelize.define(
   'User', {
     ...createId(),
     name: {
