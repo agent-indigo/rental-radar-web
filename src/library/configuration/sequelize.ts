@@ -8,11 +8,7 @@ const sequelize: Sequelize = new Sequelize({
   port: parseInt(process.env.SQL_DB_PORT ?? '5432'),
   dialect: 'postgres',
   dialectModule: pg,
-  dialectOptions: {
-    ssl: {
-      prefer: true
-    }
-  },
+  ssl: true,
   logging: (): boolean => process.env.NODE_ENV === 'development'
 })
 export default sequelize

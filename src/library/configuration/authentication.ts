@@ -20,7 +20,8 @@ const authentication = betterAuth({
     user: process.env.SQL_DB_USER ?? 'postgres',
     password: process.env.SQL_DB_PW ?? '',
     host: process.env.SQL_DB_HOST ?? 'localhost',
-    port: parseInt(process.env.SQL_DB_PORT ?? '5432')
+    port: parseInt(process.env.SQL_DB_PORT ?? '5432'),
+    ssl: true
   }),
   databaseHooks: {
     user: {
