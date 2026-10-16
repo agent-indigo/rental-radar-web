@@ -15,7 +15,8 @@ const sessionSqlModel: ModelStatic<Model<Session>> = sequelize.models.Session ??
       references: {
         model: 'User',
         key: 'id'
-      }
+      },
+      onDelete: 'CASCADE'
     },
     token: {
       type: DataTypes.STRING,

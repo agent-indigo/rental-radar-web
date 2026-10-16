@@ -15,7 +15,8 @@ const accountSqlModel: ModelStatic<Model<Account>> = sequelize.models.Account ??
       references: {
         model: 'User',
         key: 'id'
-      }
+      },
+      onDelete: 'CASCADE'
     },
     accountId: {
       type: DataTypes.STRING,

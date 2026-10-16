@@ -15,7 +15,8 @@ const listingSqlModel: ModelStatic<Model<Listing>> = sequelize.models.Listing ??
       references: {
         model: 'User',
         key: 'id'
-      }
+      },
+      onDelete: 'CASCADE'
     },
     title: {
       type: DataTypes.STRING,

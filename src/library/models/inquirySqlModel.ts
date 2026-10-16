@@ -15,7 +15,8 @@ const inquirySqlModel: ModelStatic<Model<Inquiry>> = sequelize.models.Inquiry ??
       references: {
         model: 'User',
         key: 'id'
-      }
+      },
+      onDelete: 'CASCADE'
     },
     recipient: {
       type: DataTypes.UUID,
@@ -23,7 +24,8 @@ const inquirySqlModel: ModelStatic<Model<Inquiry>> = sequelize.models.Inquiry ??
       references: {
         model: 'User',
         key: 'id'
-      }
+      },
+      onDelete: 'CASCADE'
     },
     listing: {
       type: DataTypes.UUID,
@@ -31,7 +33,8 @@ const inquirySqlModel: ModelStatic<Model<Inquiry>> = sequelize.models.Inquiry ??
       references: {
         model: 'Listing',
         key: 'id'
-      }
+      },
+      onDelete: 'CASCADE'
     },
     senderName: {
       type: DataTypes.STRING,
