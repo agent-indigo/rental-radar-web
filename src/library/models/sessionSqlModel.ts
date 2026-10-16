@@ -35,6 +35,9 @@ const sessionSqlModel: ModelStatic<Model<Session>> = sequelize.models.Session ??
     },
     userAgent: {
       type: DataTypes.STRING
+    },
+    impersonatedBy: {
+      type: DataTypes.STRING
     }
   }, {
     tableName: 'sessions',

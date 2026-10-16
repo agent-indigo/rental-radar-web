@@ -43,7 +43,17 @@ const userSqlModel: ModelStatic<Model<User>> = sequelize.models.User ?? sequeliz
     },
     role: {
       type: DataTypes.STRING,
-      allowNull: false
+      defaultValue: 'user'
+    },
+    banned: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    banReason: {
+      type: DataTypes.STRING
+    },
+    banExpires: {
+      type: DataTypes.DATE
     }
   }, {
     tableName: 'users',
@@ -53,19 +63,19 @@ const userSqlModel: ModelStatic<Model<User>> = sequelize.models.User ?? sequeliz
         await connectToSqlDb()
         if (await userSqlModel.count({
           where: {
-            role: 'root'
+            role: 'admin'
           }
         }) > 0) {
-          throw new Error('The root user already exists.')
+          throw new Error('The admin user already exists.')
         } else {
           user.setDataValue(
             'role',
-            'root'
+            'admin'
           )
         }
       },
       beforeDestroy: (user: Model<User>): void => {
-        if (user.getDataValue('role') === 'root') throw new Error('The root user shouldn\'t be deleted.')
+        if (user.getDataValue('role') === 'admin') throw new Error('The admin user shouldn\'t be deleted.')
       }
     }
   }

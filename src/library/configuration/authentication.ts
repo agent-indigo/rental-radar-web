@@ -3,6 +3,8 @@ import {
   UUID
 } from 'crypto'
 import {betterAuth} from 'better-auth'
+import {admin} from 'better-auth/plugins'
+import {nextCookies} from 'better-auth/next-js'
 import {Pool} from 'pg'
 import connectToSqlDb from '@/utilities/connectToSqlDb'
 import userSqlModel from '@/models/userSqlModel'
@@ -30,21 +32,25 @@ const authentication = betterAuth({
           await connectToSqlDb()
           if (await userSqlModel.count({
             where: {
-              role: 'root'
+              role: 'admin'
             }
           }) > 0) {
             return false
           } else {
-            user.role = 'root'
+            user.role = 'admin'
             return true
           }
         }
       },
       delete: {
-        before: async (user): Promise<boolean> => !(user.role === 'root')
+        before: async (user): Promise<boolean> => !(user.role === 'admin')
       }
     }
   },
+  plugins: [
+    admin(),
+    nextCookies()
+  ],
   session: {
     modelName: 'sessions'
   },
