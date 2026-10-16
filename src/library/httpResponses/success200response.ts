@@ -1,5 +1,5 @@
 import {NextResponse} from 'next/server'
-const success200response = (data: object): NextResponse => new NextResponse(
+const success200response: Function = (data: object): NextResponse => new NextResponse(
   JSON.stringify(data), {
     status: 200
   }

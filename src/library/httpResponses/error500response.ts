@@ -1,5 +1,5 @@
 import {NextResponse} from 'next/server'
-const error500response = (error: Error): NextResponse => {
+const error500response: Function = (error: Error): NextResponse => {
   const {
     message,
     stack
