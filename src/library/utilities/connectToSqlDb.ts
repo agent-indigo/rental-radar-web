@@ -1,14 +1,14 @@
 import sequelize from '@/configuration/sequelize'
-const connectToSqlDb = async (): Promise<void> => {
-  let connected: boolean = false
-  if (!connected) try {
+const connectToSqlDb: Function = async (): Promise<void> => {
+  let isConnected: boolean = false
+  if (!isConnected) try {
     await sequelize.authenticate()
-    connected = true
-    console.log('PostgreSQL successfully connected.')
+    isConnected = true
+    console.log('PostgreSQL database successfully connected.')
     await sequelize.sync()
     console.log('Schema successfully synchronized.')
-  } catch (error) {
-    console.error(error)
+  } catch (error: any) {
+    console.error(error.toString())
   }
 }
 export default connectToSqlDb

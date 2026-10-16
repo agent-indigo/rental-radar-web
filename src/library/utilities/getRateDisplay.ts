@@ -1,5 +1,5 @@
 import Property from '@/types/Listing'
-const getRateDisplay = (property: Property): string | undefined => {
+const getRateDisplay: Function = (property: Property): string | undefined => {
   const {
     nightlyRate,
     weeklyRate,
