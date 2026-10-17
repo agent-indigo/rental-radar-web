@@ -2,6 +2,7 @@ import authentication from '@/configuration/authentication'
 import error401response from '@/httpResponses/error401response'
 import error500response from '@/httpResponses/error500response'
 import success200response from '@/httpResponses/success200response'
+import inquirySqlModel from '@/models/inquirySqlModel'
 import userSqlModel from '@/models/userSqlModel'
 import User from '@/types/User'
 import {
@@ -19,7 +20,13 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
       const user: Model<User> | null = await userSqlModel.findByPk(session.user.id)
       return user ? success200response({
         id: user.getDataValue('id'),
-        image: user.getDataValue('image')
+        image: user.getDataValue('image'),
+        unreadInquiriesCount: await inquirySqlModel.count({
+          where: {
+            recipient: user.getDataValue('id'),
+            isRead: false
+          }
+        })
       }) : error401response
     } else {
       return error401response
