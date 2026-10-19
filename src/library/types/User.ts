@@ -5,4 +5,5 @@ export default interface User extends BetterAuthUser {
   banned?: boolean
   banReason?: string
   banExpires?: Date
+  unreadInquiriesCount: number
 }

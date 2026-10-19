@@ -1,16 +1,16 @@
-import Property from '@/types/Listing'
-const getRateDisplay: Function = (property: Property): string | undefined => {
+import Listing from '@/types/Listing'
+const getRateDisplay: Function = (listing: Listing): string | undefined => {
   const {
     nightlyRate,
     weeklyRate,
     monthlyRate
-  } = property
-  if (nightlyRate) {
-    return `${nightlyRate.toLocaleString()}/night`
+  } = listing
+  if (monthlyRate) {
+    return `${monthlyRate.toLocaleString()}/month`
   } else if (weeklyRate) {
     return `${weeklyRate.toLocaleString()}/week`
-  } else if (monthlyRate) {
-    return `${monthlyRate.toLocaleString()}/month`
+  } else if (nightlyRate) {
+    return `${nightlyRate.toLocaleString()}/night`
   }
 }
 export default getRateDisplay
