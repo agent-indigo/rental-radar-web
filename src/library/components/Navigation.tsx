@@ -169,14 +169,14 @@ const Navigation: FunctionComponent = (): ReactElement => {
                     tabIndex={-1}
                   >
                     <Link
-                      href='/dashboard'
+                      href='/listings/owned'
                       className='block px-4 py-2 text-sm text-gray-700'
                       role='menuitem'
                       tabIndex={-1}
                       id='user-menu-item-0'
                       onClick={(): void => setProfileMenuIsOpen(false)}
                     >
-                      Dashboard
+                      Your listings
                     </Link>
                     <Link
                       href='/listings/bookmarked'

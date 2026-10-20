@@ -5,6 +5,8 @@ import {
 import {Model} from 'sequelize'
 import listingSqlModel from '@/models/listingSqlModel'
 import Listing from '@/types/Listing'
+import ImageUrl from '@/types/ImageUrl'
+import imageUrlSqlModel from '@/models/imageUrlSqlModel'
 import connectToSqlDb from '@/utilities/connectToSqlDb'
 import FeaturedListingCard from '@/components/FeaturedListingCard'
 const FeaturedListings: FunctionComponent = async (): Promise<ReactElement | null> => {
@@ -21,10 +23,17 @@ const FeaturedListings: FunctionComponent = async (): Promise<ReactElement | nul
           Featured Listings
         </h2>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-          {featuredListings.map((listing: Listing): ReactElement => (
+          {featuredListings.map(async (listing: Listing): Promise<ReactElement> => (
             <FeaturedListingCard
               key={listing.id}
-              listing={listing}
+              listing={{
+                ...listing,
+                  imageUrls: await imageUrlSqlModel.findAll({
+                    where: {
+                      listingId: listing.id
+                    }
+                  }).then((results: Model<ImageUrl>[]): string[] => results.map((result: Model<ImageUrl>): string => result.getDataValue('imageUrl')))
+              }}
             />
           ))}
         </div>
