@@ -1,4 +1,4 @@
 import Listing from '@/types/Listing'
-export default interface DestructuredListing {
+export default interface ComponentListing {
   listing: Listing
 }

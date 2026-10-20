@@ -14,9 +14,9 @@ import {
   useGetListingBookmarkedStatusQuery,
   useToggleListingBookmarkedMutation
 } from '@/redux/slices/listingsApiSlice'
-import DestructuredListing from '@/types/DestructuredListing'
+import ComponentListing from '@/types/ComponentListing'
 import Listing from '@/types/Listing'
-const BookmarkListingButton: FunctionComponent<DestructuredListing> = ({listing}): ReactElement | null => {
+const BookmarkButton: FunctionComponent<ComponentListing> = ({listing}): ReactElement | null => {
   const {id}: Listing = listing
   const user: User | undefined = useSelector((state: ContextProps): User | undefined => state.user.details)
   const response = useGetListingBookmarkedStatusQuery(id!)
@@ -46,7 +46,7 @@ const BookmarkListingButton: FunctionComponent<DestructuredListing> = ({listing}
     <h1 className='text-red-500 text-center font-bold'>
       Error checking bookmark status.
     </h1>
-  ) : user && user.id === listing.owner ? (
+  ) : user && user.id === listing.ownerId ? (
     null
   ) : (
     <button
@@ -58,4 +58,4 @@ const BookmarkListingButton: FunctionComponent<DestructuredListing> = ({listing}
     </button>
   )
 }
-export default BookmarkListingButton
+export default BookmarkButton

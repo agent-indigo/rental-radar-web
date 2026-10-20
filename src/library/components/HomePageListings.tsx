@@ -7,6 +7,8 @@ import {Model} from 'sequelize'
 import connectToSqlDb from '@/utilities/connectToSqlDb'
 import Listing from '@/types/Listing'
 import listingSqlModel from '@/models/listingSqlModel'
+import ImageUrl from '@/types/ImageUrl'
+import imageUrlSqlModel from '@/models/imageUrlSqlModel'
 import ListingCard from './ListingCard'
 const HomePageListings: FunctionComponent = async (): Promise<ReactElement> => {
   await connectToSqlDb()
@@ -29,10 +31,17 @@ const HomePageListings: FunctionComponent = async (): Promise<ReactElement> => {
               <p>
                 No listings currently available.
               </p>
-            ) : (homePageListings.map((listing: Listing): ReactElement => (
+            ) : (homePageListings.map(async (listing: Listing): Promise<ReactElement> => (
               <ListingCard
                 key={listing.id}
-                listing={listing}
+                listing={{
+                  ...listing,
+                  imageUrls: await imageUrlSqlModel.findAll({
+                    where: {
+                      listingId: listing.id
+                    }
+                  }).then((results: Model<ImageUrl>[]): string[] => results.map((result: Model<ImageUrl>): string => result.getDataValue('imageUrl')))
+                }}
               />
             )))}
           </div>

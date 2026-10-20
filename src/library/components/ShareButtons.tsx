@@ -15,9 +15,9 @@ import {
   EmailShareButton,
   EmailIcon
 } from 'react-share'
-import DestructuredListing from '@/types/DestructuredListing'
+import ComponentListing from '@/types/ComponentListing'
 import Listing from '@/types/Listing'
-const ShareButtons: FunctionComponent<DestructuredListing> = ({listing}): ReactElement => {
+const ShareButtons: FunctionComponent<ComponentListing> = ({listing}): ReactElement => {
   const {
     id,
     title,

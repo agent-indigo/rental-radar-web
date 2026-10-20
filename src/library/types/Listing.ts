@@ -1,6 +1,6 @@
 import SqlRecord from '@/types/SqlRecord'
 export default interface Listing extends SqlRecord {
-  owner: string
+  ownerId: string
   title: string
   type: string
   description: string
@@ -11,14 +11,14 @@ export default interface Listing extends SqlRecord {
   beds: number
   baths: number
   sqft: number
-  amenities: string[]
+  amenities?: string[]
   nightlyRate?: number
   weeklyRate?: number
   monthlyRate?: number
-  ownerName: string
-  ownerEmail: string
+  ownerName?: string
+  ownerEmail?: string
   ownerPhone?: string
-  imageUrls: string[]
-  imageIds: string[]
+  imageUrls?: string[]
+  imageIds?: string[]
   isFeatured: boolean
 }

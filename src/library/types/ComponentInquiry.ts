@@ -1,4 +1,4 @@
 import Inquiry from '@/types/Inquiry'
-export default interface DestructuredInquiry {
+export default interface ComponentInquiry {
   inquiry: Inquiry
 }

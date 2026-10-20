@@ -6,14 +6,14 @@ import {
 import createId from '@/utilities/createId'
 import sequelize from '@/configuration/sequelize'
 import Listing from '@/types/Listing'
-const listingSqlModel: ModelStatic<Model<Listing>> = sequelize.models.Listing ?? sequelize.define<Model<Listing>>(
-  'Listing', {
+const listingSqlModel: ModelStatic<Model<Listing>> = sequelize.models.listing ?? sequelize.define<Model<Listing>>(
+  'listing', {
     ...createId(),
-    owner: {
+    ownerId: {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: 'User',
+        model: 'user',
         key: 'id'
       },
       onDelete: 'CASCADE'
@@ -58,11 +58,6 @@ const listingSqlModel: ModelStatic<Model<Listing>> = sequelize.models.Listing ??
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    amenities: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull: false,
-      defaultValue: []
-    },
     nightlyRate: {
       type: DataTypes.INTEGER
     },
@@ -72,32 +67,8 @@ const listingSqlModel: ModelStatic<Model<Listing>> = sequelize.models.Listing ??
     monthlyRate: {
       type: DataTypes.INTEGER
     },
-    ownerName: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    ownerEmail: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isEmail: true
-      }
-    },
     ownerPhone: {
       type: DataTypes.STRING
-    },
-    imageUrls: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull: false,
-      defaultValue: [],
-      validate: {
-        isUrl: true
-      }
-    },
-    imageIds: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull: false,
-      defaultValue: []
     },
     isFeatured: {
       type: DataTypes.BOOLEAN,
@@ -105,7 +76,6 @@ const listingSqlModel: ModelStatic<Model<Listing>> = sequelize.models.Listing ??
       defaultValue: false
     }
   }, {
-    tableName: 'listings',
     timestamps: true
   }
 )

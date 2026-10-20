@@ -13,9 +13,9 @@ import {
 } from '@react-google-maps/api'
 import {LatLngLiteral} from '@googlemaps/google-maps-services-js'
 import Spinner from '@/components/Spinner'
-import DestructuredListing from '@/types/DestructuredListing'
+import ComponentListing from '@/types/ComponentListing'
 import Listing from '@/types/Listing'
-const ListingMap: FunctionComponent<DestructuredListing> = ({listing}): ReactElement => {
+const ListingMap: FunctionComponent<ComponentListing> = ({listing}): ReactElement => {
   const {id}: Listing = listing
   const [
     lat,

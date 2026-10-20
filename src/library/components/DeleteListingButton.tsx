@@ -5,9 +5,9 @@ import {
   ReactElement
 } from 'react'
 import {toast} from 'react-toastify'
-import DestructuredId from '@/types/DestructuredId'
+import Id from '@/types/Id'
 import {useDeleteListingMutation} from '@/redux/slices/listingsApiSlice'
-const DeleteListingButton: FunctionComponent<DestructuredId> = ({id}): ReactElement => {
+const DeleteListingButton: FunctionComponent<Id> = ({id}): ReactElement => {
   const [deleteListing] = useDeleteListingMutation()
   const handleDelete: MouseEventHandler = async (): Promise<void> => {
     const response = await deleteListing(id)

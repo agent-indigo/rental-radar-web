@@ -11,9 +11,9 @@ import {
   FaMapMarker
 } from 'react-icons/fa'
 import ListingMap from '@/components/ListingMap'
-import DestructuredListing from '@/types/DestructuredListing'
+import ComponentListing from '@/types/ComponentListing'
 import Listing from '@/types/Listing'
-const ListingDetails: FunctionComponent<DestructuredListing> = ({listing}): ReactElement => {
+const ListingDetails: FunctionComponent<ComponentListing> = ({listing}): ReactElement => {
   const {
     title,
     type,
@@ -117,7 +117,7 @@ const ListingDetails: FunctionComponent<DestructuredListing> = ({listing}): Reac
           Amenities
         </h3>
         <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 list-none space-y-2'>
-          {amenities.map((amenity: string): ReactElement => (
+          {amenities!.map((amenity: string): ReactElement => (
             <li key={amenity}>
               <FaCheck className='inline-block text-green-600 mr-2'/>
               {amenity}

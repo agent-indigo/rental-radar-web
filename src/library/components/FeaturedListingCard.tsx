@@ -12,9 +12,9 @@ import {
   FaRulerCombined
 } from 'react-icons/fa'
 import getRateDisplay from '@/utilities/getRateDisplay'
-import DestructuredListing from '@/types/DestructuredListing'
+import ComponentListing from '@/types/ComponentListing'
 import Listing from '@/types/Listing'
-const FeaturedListingCard: FunctionComponent<DestructuredListing> = ({listing}): ReactElement => {
+const FeaturedListingCard: FunctionComponent<ComponentListing> = ({listing}): ReactElement => {
   const {
     id,
     title,
@@ -32,7 +32,7 @@ const FeaturedListingCard: FunctionComponent<DestructuredListing> = ({listing}):
   return (
     <div className='bg-white rounded-xl shadow-md relative flex flex-col md:flex-row'>
       <Image
-        src={imageUrls[0]}
+        src={imageUrls![0]}
         alt=''
         width={0}
         height={0}

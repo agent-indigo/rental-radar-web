@@ -5,9 +5,9 @@ import {
 import Link from 'next/link'
 import Image from 'next/image'
 import DeleteListingButton from './DeleteListingButton'
-import DestructuredListing from '@/types/DestructuredListing'
+import ComponentListing from '@/types/ComponentListing'
 import Listing from '@/types/Listing'
-const ProfileListingCard: FunctionComponent<DestructuredListing> = ({listing}): ReactElement => {
+const ProfileListingCard: FunctionComponent<ComponentListing> = ({listing}): ReactElement => {
   const {
     id,
     title,
@@ -21,7 +21,7 @@ const ProfileListingCard: FunctionComponent<DestructuredListing> = ({listing}): 
       <Link href={`/listings/${id}`}>
         <Image
           className='h-32 w-full rounded-md object-cover'
-          src={imageUrls[0]}
+          src={imageUrls![0]}
           alt=''
           width={500}
           height={100}

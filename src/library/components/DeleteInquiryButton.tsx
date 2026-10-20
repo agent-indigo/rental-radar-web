@@ -6,8 +6,8 @@ import {
 } from 'react'
 import {toast} from 'react-toastify'
 import {useDeleteInquiryMutation} from '@/redux/slices/inquiriesApiSlice'
-import DestructuredId from '@/types/DestructuredId'
-const DeleteInquiryButton: FunctionComponent<DestructuredId> = ({id}): ReactElement => {
+import Id from '@/types/Id'
+const DeleteInquiryButton: FunctionComponent<Id> = ({id}): ReactElement => {
   const [deleteInquiry] = useDeleteInquiryMutation()
   const handleDelete: MouseEventHandler = async (): Promise<void> => {
     const response = await deleteInquiry(id)

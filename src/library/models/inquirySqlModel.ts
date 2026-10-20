@@ -6,46 +6,35 @@ import {
 import createId from '@/utilities/createId'
 import sequelize from '@/configuration/sequelize'
 import Inquiry from '@/types/Inquiry'
-const inquirySqlModel: ModelStatic<Model<Inquiry>> = sequelize.models.Inquiry ?? sequelize.define<Model<Inquiry>>(
-  'Inquiry', {
+const inquirySqlModel: ModelStatic<Model<Inquiry>> = sequelize.models.inquiry ?? sequelize.define<Model<Inquiry>>(
+  'inquiry', {
     ...createId(),
-    sender: {
+    senderId: {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: 'User',
+        model: 'user',
         key: 'id'
       },
       onDelete: 'CASCADE'
     },
-    recipient: {
+    recipientId: {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: 'User',
+        model: 'user',
         key: 'id'
       },
       onDelete: 'CASCADE'
     },
-    listing: {
+    listingId: {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: 'Listing',
+        model: 'listing',
         key: 'id'
       },
       onDelete: 'CASCADE'
-    },
-    senderName: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    senderEmail: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isEmail: true
-      }
     },
     senderPhone: {
       type: DataTypes.STRING
@@ -59,7 +48,6 @@ const inquirySqlModel: ModelStatic<Model<Inquiry>> = sequelize.models.Inquiry ??
       defaultValue: false
     }
   }, {
-    tableName: 'inquiries',
     timestamps: true
   }
 )
