@@ -3,7 +3,7 @@ export default  interface Inquiry extends SqlRecord {
   senderId: string
   recipientId: string
   listingId: string
-  listingName?: string
+  listingTitle?: string
   senderName?: string
   senderEmail?: string
   senderPhone?: string
