@@ -31,19 +31,22 @@ const HomePageListings: FunctionComponent = async (): Promise<ReactElement> => {
               <p>
                 No listings currently available.
               </p>
-            ) : (homePageListings.map(async (listing: Listing): Promise<ReactElement> => (
-              <ListingCard
-                key={listing.id}
-                listing={{
-                  ...listing,
-                  imageUrls: await imageUrlSqlModel.findAll({
-                    where: {
-                      listingId: listing.id
-                    }
-                  }).then((results: Model<ImageUrl>[]): string[] => results.map((result: Model<ImageUrl>): string => result.getDataValue('imageUrl')))
-                }}
-              />
-            )))}
+            ) : homePageListings.map(async (listing: Listing): Promise<ReactElement> => {
+              const {id}: Listing = listing
+              return (
+                <ListingCard
+                  key={id}
+                  listing={{
+                    ...listing,
+                    imageUrls: await imageUrlSqlModel.findAll({
+                      where: {
+                        listingId: id
+                      }
+                    }).then((results: Model<ImageUrl>[]): string[] => results.map((result: Model<ImageUrl>): string => result.getDataValue('imageUrl')))
+                  }}
+                />
+              )
+            })}
           </div>
         </div>
       </section>

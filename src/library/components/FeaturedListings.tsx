@@ -23,19 +23,22 @@ const FeaturedListings: FunctionComponent = async (): Promise<ReactElement | nul
           Featured Listings
         </h2>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-          {featuredListings.map(async (listing: Listing): Promise<ReactElement> => (
-            <FeaturedListingCard
-              key={listing.id}
-              listing={{
-                ...listing,
-                  imageUrls: await imageUrlSqlModel.findAll({
-                    where: {
-                      listingId: listing.id
-                    }
-                  }).then((results: Model<ImageUrl>[]): string[] => results.map((result: Model<ImageUrl>): string => result.getDataValue('imageUrl')))
-              }}
-            />
-          ))}
+          {featuredListings.map(async (listing: Listing): Promise<ReactElement> => {
+            const {id}: Listing = listing
+            return (
+              <FeaturedListingCard
+                key={id}
+                listing={{
+                  ...listing,
+                    imageUrls: await imageUrlSqlModel.findAll({
+                      where: {
+                        listingId: id
+                      }
+                    }).then((results: Model<ImageUrl>[]): string[] => results.map((result: Model<ImageUrl>): string => result.getDataValue('imageUrl')))
+                }}
+              />
+            )
+          })}
         </div>
       </div>
     </section>
