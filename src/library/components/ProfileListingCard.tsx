@@ -18,7 +18,7 @@ const ProfileListingCard: FunctionComponent<DestructuredListing> = ({listing}): 
   }: Listing = listing
   return (
     <div className='mb-10'>
-      <Link href={`/properties/${id}`}>
+      <Link href={`/listings/${id}`}>
         <Image
           className='h-32 w-full rounded-md object-cover'
           src={imageUrls[0]}
@@ -38,19 +38,19 @@ const ProfileListingCard: FunctionComponent<DestructuredListing> = ({listing}): 
       </div>
       <div className='mt-2'>
         <Link
-          href={`/properties/${id}/edit`}
+          href={`/listings/${id}/edit`}
           className='bg-blue-500 text-white px-3 py-3 rounded-md mr-2 hover:bg-blue-600'
         >
           Edit
         </Link>
         <Link
-          href={`/properties/${id}/images/add`}
+          href={`/listings/${id}/images/add`}
           className='bg-blue-500 text-white px-3 py-3 rounded-md mr-2 hover:bg-blue-600'
         >
           Add images
         </Link>
         <Link
-          href={`/properties/${id}/images/delete`}
+          href={`/listings/${id}/images/delete`}
           className='bg-blue-500 text-white px-3 py-3 rounded-md mr-2 hover:bg-blue-600'
         >
           Delete images
