@@ -31,19 +31,43 @@ const listingsApiSlice = apiSlice.injectEndpoints({
       query: (id: string) => ({
         url: `/listings/bookmarked/status/${id}`,
         method: 'PATCH'
-      })
+      }),
+      invalidatesTags: [
+        'listing'
+      ]
     }),
     toggleListingFeatured: builder.mutation({
       query: (id: string) => ({
         url: `/listings/featured/status/${id}`,
         method: 'PATCH'
-      })
+      }),
+      invalidatesTags: [
+        'listing'
+      ]
     }),
     deleteListing: builder.mutation({
       query: (id: string) => ({
         url: `/listings/${id}`,
         method: 'delete'
       })
+    }),
+    getListingBookmarkedStatus: builder.query({
+      query: (id: string) => ({
+        url: `/listings/bookmarked/status/${id}`,
+        method: 'GET'
+      }),
+      providesTags: [
+        'listing'
+      ]
+    }),
+    getListingFeaturedStatus: builder.query({
+      query: (id: string) => ({
+        url: `/listings/featured/status/${id}`,
+        method: 'GET'
+      }),
+      providesTags: [
+        'listing'
+      ]
     })
   })
 })
@@ -53,5 +77,9 @@ export const {
   useDeleteImageFromListingMutation,
   useToggleListingBookmarkedMutation,
   useToggleListingFeaturedMutation,
-  useDeleteListingMutation
+  useDeleteListingMutation,
+  useGetListingBookmarkedStatusQuery,
+  useLazyGetListingBookmarkedStatusQuery,
+  useGetListingFeaturedStatusQuery,
+  useLazyGetListingFeaturedStatusQuery
 } = listingsApiSlice

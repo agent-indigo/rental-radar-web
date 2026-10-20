@@ -14,7 +14,7 @@ const SignInButton: FunctionComponent = (): ReactElement => (
   >
     <span>
       <FaGoogle className='text-white mr-2'/>
-      Sign In or Register
+      Sign in or register
     </span>
   </button>
 )

@@ -21,6 +21,7 @@ const apiSlice = createApi({
     return result
   },
   tagTypes: [
+    'listing',
     'user'
   ],
   endpoints: () => ({})
