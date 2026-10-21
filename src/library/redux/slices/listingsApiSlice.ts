@@ -1,4 +1,6 @@
 import apiSlice from '@/redux/slices/apiSlice'
+import DeleteImageParams from '@/types/DeleteImageParams'
+import PatchParams from '@/types/PatchParams'
 const listingsApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     submitListing: builder.mutation({
@@ -12,7 +14,7 @@ const listingsApiSlice = apiSlice.injectEndpoints({
       query: ({
         id,
         body
-      }) => ({
+      }: PatchParams) => ({
         url: `/listings/${id}/images`,
         method: 'POST',
         body
@@ -22,7 +24,7 @@ const listingsApiSlice = apiSlice.injectEndpoints({
       query: ({
         id,
         imageId
-      }) => ({
+      }: DeleteImageParams) => ({
         url: `/listings/${id}/images/${imageId}`,
         method: 'DELETE'
       })
@@ -68,6 +70,16 @@ const listingsApiSlice = apiSlice.injectEndpoints({
       providesTags: [
         'listing'
       ]
+    }),
+    editListing: builder.mutation({
+      query: ({
+        id,
+        body
+      }: PatchParams) => ({
+        url: `/listings/${id},
+        method: 'PATCH`,
+        body
+      })
     })
   })
 })
@@ -81,5 +93,6 @@ export const {
   useGetListingBookmarkedStatusQuery,
   useLazyGetListingBookmarkedStatusQuery,
   useGetListingFeaturedStatusQuery,
-  useLazyGetListingFeaturedStatusQuery
+  useLazyGetListingFeaturedStatusQuery,
+  useEditListingMutation
 } = listingsApiSlice
