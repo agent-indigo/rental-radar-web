@@ -47,13 +47,13 @@ const ProfileListingCard: FunctionComponent<ComponentListing> = ({listing}): Rea
           href={`/listings/${id}/images/add`}
           className='bg-blue-500 text-white px-3 py-3 rounded-md mr-2 hover:bg-blue-600'
         >
-          Add images
+          Add Images
         </Link>
         <Link
           href={`/listings/${id}/images/delete`}
           className='bg-blue-500 text-white px-3 py-3 rounded-md mr-2 hover:bg-blue-600'
         >
-          Delete images
+          Delete Images
         </Link>
         <DeleteListingButton id={id!}/>
       </div>

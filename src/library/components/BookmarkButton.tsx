@@ -24,7 +24,8 @@ const BookmarkButton: FunctionComponent<ComponentListing> = ({listing}): ReactEl
   const {
     data,
     isError,
-    isLoading
+    isLoading,
+    error
   } = response
   const {isBookmarked} = data
   const buttonBg: string = isBookmarked ? 'red' : 'blue'
@@ -44,7 +45,7 @@ const BookmarkButton: FunctionComponent<ComponentListing> = ({listing}): ReactEl
     <Spinner loading={isLoading}/>
   ) : isError ? (
     <h1 className='text-red-500 text-center font-bold'>
-      Error checking bookmark status.
+      {error.toString()}
     </h1>
   ) : user && user.id === listing.ownerId ? (
     null
@@ -54,7 +55,7 @@ const BookmarkButton: FunctionComponent<ComponentListing> = ({listing}): ReactEl
       onClick={handleToggle}
       className={`bg-${buttonBg}-500 hover:bg-${buttonBg}-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center`}
     >
-      <FaBookmark className='mr-2'/> {!user && 'Log in to '}{isBookmarked ? 'Remove Bookmark' : 'Bookmark'}
+      <FaBookmark className='mr-2'/> {!user && 'Sign in to '}{isBookmarked ? 'Remove Bookmark' : 'Bookmark'}
     </button>
   )
 }

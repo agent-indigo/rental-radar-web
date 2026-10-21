@@ -65,7 +65,7 @@ const SearchListingsForm: FunctionComponent = (): ReactElement => {
           htmlFor='type'
           className='sr-only'
         >
-          Listing type
+          Listing Type
         </label>
         <select
           id='type'

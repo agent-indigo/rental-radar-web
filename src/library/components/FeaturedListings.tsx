@@ -30,11 +30,11 @@ const FeaturedListings: FunctionComponent = async (): Promise<ReactElement | nul
                 key={id}
                 listing={{
                   ...listing,
-                    imageUrls: await imageUrlSqlModel.findAll({
-                      where: {
-                        listingId: id
-                      }
-                    }).then((results: Model<ImageUrl>[]): string[] => results.map((result: Model<ImageUrl>): string => result.getDataValue('imageUrl')))
+                  imageUrls: await imageUrlSqlModel.findAll({
+                    where: {
+                      listingId: id
+                    }
+                  }).then((results: Model<ImageUrl>[]): string[] => results.map((result: Model<ImageUrl>): string => result.getDataValue('imageUrl')))
                 }}
               />
             )

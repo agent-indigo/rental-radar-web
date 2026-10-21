@@ -42,7 +42,7 @@ const Navigation: FunctionComponent = (): ReactElement => {
             >
               <span className='absolute -inset-0.5'/>
               <span className='sr-only'>
-                Open main menu
+                Open Main Menu
               </span>
               <svg
                 className='block h-6 w-6'
@@ -95,7 +95,7 @@ const Navigation: FunctionComponent = (): ReactElement => {
                     href='/listings/add'
                     className={`${pathname === '/listings/add' ? 'bg-black' : ''} text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
                   >
-                    Submit listing
+                    Submit Listing
                   </Link>
                 )}
               </div>
@@ -147,7 +147,7 @@ const Navigation: FunctionComponent = (): ReactElement => {
                   >
                     <span className='absolute -inset-1.5'/>
                     <span className='sr-only'>
-                      Open user menu
+                      Open User Menu
                     </span>
                     <Image
                       className='h-8 w-8 rounded-full'
@@ -176,7 +176,7 @@ const Navigation: FunctionComponent = (): ReactElement => {
                       id='user-menu-item-0'
                       onClick={(): void => setProfileMenuIsOpen(false)}
                     >
-                      Your listings
+                      Your Listings
                     </Link>
                     <Link
                       href='/listings/bookmarked'
@@ -199,7 +199,7 @@ const Navigation: FunctionComponent = (): ReactElement => {
                         await authenticationClient.signOut()
                       }}
                     >
-                      Sign out
+                      Sign Out
                     </Link>
                   </div>
                 )}

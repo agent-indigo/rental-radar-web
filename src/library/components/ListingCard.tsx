@@ -71,9 +71,9 @@ const ListingCard: FunctionComponent<ComponentListing> = ({listing}): ReactEleme
         <div className='flex justify-center gap-4 text-green-900 text-sm mb-4'>
             <p>
               <FaMoneyBill className='inline mr-2'/>
-              {nightlyRate && `$${nightlyRate.toLocaleString()} Nightly${weeklyRate && ' '}`}
-              {weeklyRate && `$${weeklyRate.toLocaleString()} Weekly${monthlyRate && ' '}`}
-              {monthlyRate && `$${monthlyRate.toLocaleString()} Monthly`}
+              {nightlyRate && `$${nightlyRate.toLocaleString()}/night${weeklyRate && ' '}`}
+              {weeklyRate && `$${weeklyRate.toLocaleString()}/week${monthlyRate && ' '}`}
+              {monthlyRate && `$${monthlyRate.toLocaleString()}/month`}
             </p>
         </div>
         <div className='border border-gray-100 mb-5'/>
