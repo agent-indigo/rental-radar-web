@@ -8,12 +8,12 @@ import {
   FaBath,
   FaBed,
   FaMapMarker,
-  FaMoneyBill,
   FaRulerCombined
 } from 'react-icons/fa'
 import getRateDisplay from '@/utilities/getRateDisplay'
 import ComponentListing from '@/types/ComponentListing'
 import Listing from '@/types/Listing'
+import RateDisplay from '@/components/RateDisplay'
 const FeaturedListingCard: FunctionComponent<ComponentListing> = ({listing}): ReactElement => {
   const {
     id,
@@ -24,9 +24,6 @@ const FeaturedListingCard: FunctionComponent<ComponentListing> = ({listing}): Re
     beds,
     baths,
     sqft,
-    nightlyRate,
-    weeklyRate,
-    monthlyRate,
     imageUrls
   }: Listing = listing
   return (
@@ -66,14 +63,7 @@ const FeaturedListingCard: FunctionComponent<ComponentListing> = ({listing}): Re
             <span className='md:hidden lg:inline'> sqft</span>
           </p>
         </div>
-        <div className='flex justify-center gap-4 text-green-900 text-sm mb-4'>
-          <p>
-            <FaMoneyBill className='inline-block mr-2'/>
-            {nightlyRate && `$${nightlyRate.toLocaleString()}/night${weeklyRate && ' '}`}
-            {weeklyRate && `$${weeklyRate.toLocaleString()}/week${monthlyRate && ' '}`}
-            {monthlyRate && `$${monthlyRate.toLocaleString()}/month`}
-          </p>
-        </div>
+        <RateDisplay listing={listing}/>
         <div className='border border-gray-200 mb-5'/>
         <div className='flex flex-col lg:flex-row justify-between'>
           <div className='flex align-middle gap-2 mb-4 lg:mb-0'>
