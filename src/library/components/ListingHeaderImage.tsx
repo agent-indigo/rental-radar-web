@@ -4,7 +4,7 @@ import {
   ReactElement
 } from 'react'
 import HeaderProps from '@/types/HeaderProps'
-const PropertyHeaderImage: FunctionComponent<HeaderProps> = ({imageUrl}): ReactElement => (
+const ListingHeaderImage: FunctionComponent<HeaderProps> = ({imageUrl}): ReactElement => (
   <section>
     <div className='container-xl m-auto'>
       <div className='grid grid-cols-1'>
@@ -20,4 +20,4 @@ const PropertyHeaderImage: FunctionComponent<HeaderProps> = ({imageUrl}): ReactE
     </div>
   </section>
 )
-export default PropertyHeaderImage
+export default ListingHeaderImage

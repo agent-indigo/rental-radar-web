@@ -7,7 +7,7 @@ import Image from 'next/image'
 import DeleteListingButton from './DeleteListingButton'
 import ComponentListing from '@/types/ComponentListing'
 import Listing from '@/types/Listing'
-const ProfileListingCard: FunctionComponent<ComponentListing> = ({listing}): ReactElement => {
+const UserListingCard: FunctionComponent<ComponentListing> = ({listing}): ReactElement => {
   const {
     id,
     title,
@@ -60,4 +60,4 @@ const ProfileListingCard: FunctionComponent<ComponentListing> = ({listing}): Rea
     </div>
   )
 }
-export default ProfileListingCard
+export default UserListingCard
