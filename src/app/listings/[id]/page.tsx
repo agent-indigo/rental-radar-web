@@ -3,19 +3,25 @@ import {
   ReactElement
 } from 'react'
 import {Metadata} from 'next'
+import {notFound} from 'next/navigation'
 import Link from 'next/link'
+import {headers} from 'next/headers'
 import {FaArrowLeft} from 'react-icons/fa'
 import {Model} from 'sequelize'
-import connectToSqlDb from '@/utilities/connectToSqlDb'
-import listingSqlModel from '@/models/listingSqlModel'
-import imageUrlSqlModel from '@/models/imageUrlSqlModel'
+import {UserWithRole} from 'better-auth/plugins'
 import ListingHeaderImage from '@/components/ListingHeaderImage'
 import ListingDetails from '@/components/ListingDetails'
 import ListingImages from '@/components/ListingImages'
 import BookmarkButton from '@/components/BookmarkButton'
 import SubmitInquiryForm from '@/components/SubmitInquiryForm'
 import ShareButtons from '@/components/ShareButtons'
+import authentication from '@/configuration/authentication'
+import connectToSqlDb from '@/utilities/connectToSqlDb'
+import listingSqlModel from '@/models/listingSqlModel'
+import amenitySqlModel from '@/models/amenitySqlModel'
+import imageUrlSqlModel from '@/models/imageUrlSqlModel'
 import Listing from '@/types/Listing'
+import Amenity from '@/types/Amenity'
 import ImageUrl from '@/types/ImageUrl'
 export const metadata: Metadata = {
   title: 'Listing Details'
@@ -23,13 +29,38 @@ export const metadata: Metadata = {
 const ListingDetailsPage: FunctionComponent<any> = async ({params}): Promise<ReactElement> => {
   const {id} = await params
   await connectToSqlDb()
-  const listing: Listing = {
-    ...(await listingSqlModel.findByPk(id).then((listing: Model<Listing> | null): Listing => listing!.toJSON())),
-    imageUrls: await imageUrlSqlModel.findAll({
-      where: {
-        listingId: id
+  const listing: Listing | null = await listingSqlModel.findByPk(id).then(async (listing: Model<Listing> | null): Promise<Listing | null> => {
+    if (listing) {
+      const {
+        name,
+        email
+      }: UserWithRole = await authentication.api.getUser({
+        query: {
+          id: listing.getDataValue('ownerId')
+        },
+        headers: await headers()
+      })
+      return {
+        ...listing.toJSON(),
+        ownerName: name,
+        ownerEmail: email,
+        amenities: await amenitySqlModel.findAll({
+          where: {
+            listingId: id
+          }
+        }).then((amenities: Model<Amenity>[]): string[] => amenities.map((amenity: Model<Amenity>): string => amenity.getDataValue('amenity'))),
+        imageUrls: await imageUrlSqlModel.findAll({
+          where: {
+            listingId: id
+          }
+        }).then((imageUrls: Model<ImageUrl>[]): string[] => imageUrls.map((imageUrl: Model<ImageUrl>): string => imageUrl.getDataValue('imageUrl')))
       }
-    }).then((imageUrls: Model<ImageUrl>[]): string[] => imageUrls.map((imageUrl: Model<ImageUrl>): string => imageUrl.getDataValue('imageUrl')))
+    } else {
+      return null
+    }
+  })
+  if (!listing) {
+    notFound()
   }
   const {imageUrls} = listing
   return (

@@ -3,20 +3,25 @@ import {
   ReactElement
 } from 'react'
 import {Metadata} from 'next'
+import Link from 'next/link'
+import {headers} from 'next/headers'
 import {
   Model,
   Op
 } from 'sequelize'
-import Link from 'next/link'
 import {FaArrowCircleLeft} from 'react-icons/fa'
-import connectToSqlDb from '@/utilities/connectToSqlDb'
-import listingSqlModel from '@/models/listingSqlModel'
-import imageUrlSqlModel from '@/models/imageUrlSqlModel'
+import {UserWithRole} from 'better-auth/plugins'
 import SearchListingsForm from '@/components/SearchListingsForm'
 import ListingCard from '@/components/ListingCard'
 import FeaturedListings from '@/components/FeaturedListings'
 import Paginator from '@/components/Paginator'
+import authentication from '@/configuration/authentication'
+import connectToSqlDb from '@/utilities/connectToSqlDb'
+import listingSqlModel from '@/models/listingSqlModel'
+import amenitySqlModel from '@/models/amenitySqlModel'
+import imageUrlSqlModel from '@/models/imageUrlSqlModel'
 import Listing from '@/types/Listing'
+import Amenity from '@/types/Amenity'
 import ImageUrl from '@/types/ImageUrl'
 export const metadata: Metadata = {
   title: 'Search Results'
@@ -42,14 +47,33 @@ const SearchResultsPage: FunctionComponent<any> = async ({searchParams}): Promis
         ]
       } : {})
     }
-  }).then((results: Model<Listing>[]): Promise<Listing[]> => Promise.all(results.map(async (result: Model<Listing>): Promise<Listing> => ({
-    ...result.toJSON(),
-    imageUrls: await imageUrlSqlModel.findAll({
-      where: {
-        listingId: result.getDataValue('id')
-      }
-    }).then((imageUrls: Model<ImageUrl>[]): string[] => imageUrls.map((imageUrl: Model<ImageUrl>): string => imageUrl.getDataValue('imageUrl')))
-  }))))
+  }).then((results: Model<Listing>[]): Promise<Listing[]> => Promise.all(results.map(async (result: Model<Listing>): Promise<Listing> => {
+    const id: string | undefined = result.getDataValue('id')
+    const {
+      name,
+      email
+    }: UserWithRole = await authentication.api.getUser({
+      query: {
+        id: result.getDataValue('ownerId')
+      },
+      headers: await headers()
+    })
+    return {
+      ...result.toJSON(),
+      ownerName: name,
+      ownerEmail: email,
+      amenities: await amenitySqlModel.findAll({
+        where: {
+          listingId: id
+        }
+      }).then((amenities: Model<Amenity>[]): string[] => amenities.map((amenity: Model<Amenity>): string => amenity.getDataValue('amenity'))),
+      imageUrls: await imageUrlSqlModel.findAll({
+        where: {
+          listingId: id
+        }
+      }).then((imageUrls: Model<ImageUrl>[]): string[] => imageUrls.map((imageUrl: Model<ImageUrl>): string => imageUrl.getDataValue('imageUrl')))
+    }
+  })))
   return (
     <>
       <section className='bg-blue-700 py-4'>

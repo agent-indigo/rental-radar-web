@@ -4,6 +4,7 @@ import {
 } from 'react'
 import {Metadata} from 'next'
 import {Model} from 'sequelize'
+import {headers} from 'next/headers'
 import {UserWithRole} from 'better-auth/plugins'
 import authentication from '@/configuration/authentication'
 import connectToSqlDb from '@/utilities/connectToSqlDb'
@@ -13,13 +14,15 @@ import InquiryCard from '@/components/InquiryCard'
 import Inquiry from '@/types/Inquiry'
 import Listing from '@/types/Listing'
 export const metadata: Metadata = {
-  title: 'Inquiries'
+  title: 'My Received Inquiries'
 }
 const InquiriesPage: FunctionComponent = async (): Promise<ReactElement> => {
   await connectToSqlDb()
   const inquiries: Inquiry[] = await inquirySqlModel.findAll({
     where: {
-      recipientId: (await authentication.api.getUser()).id
+      recipientId: (await authentication.api.getSession({
+        headers: await headers()
+      }))!.user.id
     }
   }).then((inquiries: Model<Inquiry>[]): Promise<Inquiry[]> => Promise.all(inquiries.map(async (inquiry: Model<Inquiry>): Promise<Inquiry> => {
     const {
@@ -28,7 +31,8 @@ const InquiriesPage: FunctionComponent = async (): Promise<ReactElement> => {
     }: UserWithRole = await authentication.api.getUser({
       query: {
         id: inquiry.getDataValue('senderId')
-      }
+      },
+      headers: await headers()
     })
     return {
       ...inquiry.toJSON(),
