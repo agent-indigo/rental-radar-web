@@ -3,6 +3,7 @@ import error401response from '@/httpResponses/error401response'
 import error500response from '@/httpResponses/error500response'
 import success200response from '@/httpResponses/success200response'
 import inquirySqlModel from '@/models/inquirySqlModel'
+import {User} from 'better-auth'
 import {
   NextRequest,
   NextResponse
@@ -14,25 +15,20 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
       headers: request.headers
     })
     if (session) {
-      const {user} = session
-      if (user) {
-        const {
-          id,
-          image
-        } = user
-        return success200response({
-          id,
-          image,
-          unreadInquiriesCount: await inquirySqlModel.count({
-            where: {
-              recipientId: id,
-              isRead: false
-            }
-          })
+      const {
+        id,
+        image
+      }: User = session.user
+      return success200response({
+        id,
+        image,
+        unreadInquiriesCount: await inquirySqlModel.count({
+          where: {
+            recipientId: id,
+            isRead: false
+          }
         })
-      } else {
-        return error401response
-      }
+      })
     } else {
       return error401response
     }
