@@ -1,4 +1,4 @@
-import authentication from '@/configuration/authentication'
+import authentication from '@/connectors/authentication'
 import error401response from '@/httpResponses/error401response'
 import error500response from '@/httpResponses/error500response'
 import success200response from '@/httpResponses/success200response'

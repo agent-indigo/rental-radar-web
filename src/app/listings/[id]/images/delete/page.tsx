@@ -10,7 +10,7 @@ import {
 import {headers} from 'next/headers'
 import {Model} from 'sequelize'
 import {UserWithRole} from 'better-auth/plugins'
-import authentication from '@/configuration/authentication'
+import authentication from '@/connectors/authentication'
 import connectToSqlDb from '@/utilities/connectToSqlDb'
 import DeleteImagesForm from '@/components/DeleteImagesForm'
 import listingSqlModel from '@/models/listingSqlModel'

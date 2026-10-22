@@ -4,7 +4,7 @@ import {
   ModelStatic
 } from 'sequelize'
 import createId from '@/utilities/createId'
-import sequelize from '@/configuration/sequelize'
+import sequelize from '@/connectors/sequelize'
 import ImageId from '@/types/ImageId'
 const imageIdSqlModel: ModelStatic<Model<ImageId>> = sequelize.models.imageId ?? sequelize.define<Model<ImageId>>(
   'imageId', {

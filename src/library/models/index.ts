@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import {Sequelize} from 'sequelize'
-import sequelize from '@/configuration/sequelize'
+import sequelize from '@/connectors/sequelize'
 import Database from '@/types/Database'
 const database: Database = {
   Sequelize,

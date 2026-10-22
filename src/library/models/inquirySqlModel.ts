@@ -4,7 +4,7 @@ import {
   ModelStatic
 } from 'sequelize'
 import createId from '@/utilities/createId'
-import sequelize from '@/configuration/sequelize'
+import sequelize from '@/connectors/sequelize'
 import Inquiry from '@/types/Inquiry'
 const inquirySqlModel: ModelStatic<Model<Inquiry>> = sequelize.models.inquiry ?? sequelize.define<Model<Inquiry>>(
   'inquiry', {

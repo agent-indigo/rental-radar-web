@@ -4,7 +4,7 @@ import {
   ModelStatic
 } from 'sequelize'
 import createId from '@/utilities/createId'
-import sequelize from '@/configuration/sequelize'
+import sequelize from '@/connectors/sequelize'
 import Amenity from '@/types/Amenity'
 const amenitySqlModel: ModelStatic<Model<Amenity>> = sequelize.models.amenity ?? sequelize.define<Model<Amenity>>(
   'amenity', {

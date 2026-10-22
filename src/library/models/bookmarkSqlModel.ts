@@ -4,7 +4,7 @@ import {
   ModelStatic
 } from 'sequelize'
 import createId from '@/utilities/createId'
-import sequelize from '@/configuration/sequelize'
+import sequelize from '@/connectors/sequelize'
 import Bookmark from '@/types/Bookmark'
 const bookmarkSqlModel: ModelStatic<Model<Bookmark>> = sequelize.models.bookmark ?? sequelize.define<Model<Bookmark>>(
   'bookmark', {
