@@ -19,14 +19,13 @@ import Listing from '@/types/Listing'
 const BookmarkButton: FunctionComponent<ComponentListing> = ({listing}): ReactElement | null => {
   const {id}: Listing = listing
   const user: User | undefined = useSelector((state: ContextProps): User | undefined => state.user.details)
-  const response = useGetListingBookmarkedStatusQuery(id!)
-  const [toggleListingBookmarked] = useToggleListingBookmarkedMutation()
   const {
     data,
     isError,
     isLoading,
     error
-  } = response
+  } = useGetListingBookmarkedStatusQuery(id!)
+  const [toggleListingBookmarked] = useToggleListingBookmarkedMutation()
   const {isBookmarked} = data
   const buttonBg: string = isBookmarked ? 'red' : 'blue'
   const handleToggle: MouseEventHandler = async (): Promise<void> => {

@@ -4,6 +4,7 @@ import {
   ChangeEventHandler,
   FunctionComponent,
   ReactElement,
+  SubmitEvent,
   SubmitEventHandler,
   useState
 } from 'react'
@@ -24,6 +25,7 @@ const SearchListingsForm: FunctionComponent = (): ReactElement => {
     type
   }: ListingSearchParams = params
   const handleChange: ChangeEventHandler = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
+    event.preventDefault()
     const {
       name,
       value
@@ -34,7 +36,7 @@ const SearchListingsForm: FunctionComponent = (): ReactElement => {
       ]: value
     }))
   }
-  const handleSubmit: SubmitEventHandler = (event): void => {
+  const handleSubmit: SubmitEventHandler = (event: SubmitEvent): void => {
     event.preventDefault()
     router.push(`/listings/search?keywords=${keywords}&type=${type}&page=1`)
   }

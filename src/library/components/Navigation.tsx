@@ -1,6 +1,8 @@
 'use client'
 import {
   FunctionComponent,
+  MouseEvent,
+  MouseEventHandler,
   ReactElement,
   useState
 } from 'react'
@@ -13,6 +15,8 @@ import profileDefault from '@/assets/images/profile.png'
 import UnreadInquiriesCountDisplay from '@/components/UnreadInquiriesCountDisplay'
 import SignInButton from '@/components/SignInButton'
 import authenticationClient from '@/utilities/authenticationClient'
+import {clearDetails} from '@/redux/slices/userSlice'
+import store from '@/redux/store'
 import ContextProps from '@/types/ContextProps'
 import User from '@/types/User'
 const Navigation: FunctionComponent = (): ReactElement => {
@@ -25,6 +29,12 @@ const Navigation: FunctionComponent = (): ReactElement => {
     profileMenuIsOpen,
     setProfileMenuIsOpen
   ] = useState<boolean>(false)
+  const handleSignOut: MouseEventHandler = async (event: MouseEvent): Promise<void> => {
+    event.preventDefault()
+    setProfileMenuIsOpen(false)
+    await authenticationClient.signOut()
+    store.dispatch(clearDetails())
+  }
   const pathname: string = usePathname()
   return (
     <nav className='bg-blue-700 border-b border-blue-500'>
@@ -132,7 +142,7 @@ const Navigation: FunctionComponent = (): ReactElement => {
                     />
                   </svg>
                 </button>
-                <UnreadInquiriesCountDisplay unreadInquiriesCount={user?.unreadInquiriesCount}/>
+                <UnreadInquiriesCountDisplay/>
               </Link>
               {/* profile dropdown button */}
               <div className='relative ml-3'>
@@ -194,10 +204,7 @@ const Navigation: FunctionComponent = (): ReactElement => {
                       role='menuitem'
                       tabIndex={-1}
                       id='user-menu-item-2'
-                      onClick={async (): Promise<void> => {
-                        setProfileMenuIsOpen(false)
-                        await authenticationClient.signOut()
-                      }}
+                      onClick={handleSignOut}
                     >
                       Sign Out
                     </Link>

@@ -84,7 +84,7 @@ const EditListingForm: FunctionComponent<ComponentListing> = ({listing}): ReactE
       event.target.value
     ] : amenities.filter((amenity: string): boolean => amenity !== event.target.value))
   }
-  const handleSubmit: Function = async (): Promise<void> => {
+  const handleSubmit = async (): Promise<void> => {
     const patch: FormData = new FormData()
     if (title !== listing.title) patch.append(
       'title',
@@ -147,12 +147,12 @@ const EditListingForm: FunctionComponent<ComponentListing> = ({listing}): ReactE
     if (error) {
       toast.error(error.toString())
     } else {
-      toast.success('Listing updated.')
+      toast.success('Changes saved.')
       router.push(`/listings/${id}`)
     }
   }
   return (
-    <form action={handleSubmit.bind(null)}>
+    <form action={handleSubmit}>
       <h2 className='text-3xl text-center font-semibold mb-6'>
         Edit Listing
       </h2>

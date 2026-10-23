@@ -2,6 +2,8 @@ import {
   createApi,
   fetchBaseQuery
 } from '@reduxjs/toolkit/query/react'
+import {clearDetails} from '@/redux/slices/userSlice'
+import store from '@/redux/store'
 import authenticationClient from '@/utilities/authenticationClient'
 const apiSlice = createApi({
   baseQuery: async (
@@ -17,7 +19,10 @@ const apiSlice = createApi({
       api,
       extra
     )
-    if (result.error?.status === 401) await authenticationClient.signOut()
+    if (result.error?.status === 401) {
+      await authenticationClient.signOut()
+      store.dispatch(clearDetails())
+    }
     return result
   },
   tagTypes: [

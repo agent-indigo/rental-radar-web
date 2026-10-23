@@ -1,6 +1,7 @@
 'use client'
 import {
   FunctionComponent,
+  MouseEvent,
   MouseEventHandler,
   ReactElement
 } from 'react'
@@ -9,9 +10,9 @@ import {useDeleteInquiryMutation} from '@/redux/slices/inquiriesApiSlice'
 import Id from '@/types/Id'
 const DeleteInquiryButton: FunctionComponent<Id> = ({id}): ReactElement => {
   const [deleteInquiry] = useDeleteInquiryMutation()
-  const handleDelete: MouseEventHandler = async (): Promise<void> => {
-    const response = await deleteInquiry(id)
-    const {error} = response
+  const handleDelete: MouseEventHandler = async (event: MouseEvent): Promise<void> => {
+    event.preventDefault()
+    const {error} = await deleteInquiry(id)
     if (error) {
       toast.error(error.toString())
     } else {

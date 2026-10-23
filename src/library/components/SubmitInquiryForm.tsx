@@ -19,7 +19,7 @@ const SubmitInquiryForm: FunctionComponent<ComponentListing> = ({listing}): Reac
   const user: User | undefined = useSelector((state: ContextProps): User | undefined => state.user.details)
   const isOwner: boolean = user?.id === ownerId
   const [submitInquiry] = useSubmitInquiryMutation()
-  const handleSubmit: Function = async (body: FormData): Promise<void> => {
+  const handleSubmit = async (body: FormData): Promise<void> => {
     const response = await submitInquiry(body)
     const {error} = response
     if (error) {
@@ -34,7 +34,7 @@ const SubmitInquiryForm: FunctionComponent<ComponentListing> = ({listing}): Reac
         {user ? isOwner ? 'This is one of your listings.' : 'Inquiry Form' : 'Sign in to inquire.'}
       </h3>
       {user && !isOwner && (
-        <form action={handleSubmit.bind(null)}>
+        <form action={handleSubmit}>
           <input
             type='hidden'
             id='listingId'

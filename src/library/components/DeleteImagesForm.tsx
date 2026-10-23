@@ -38,11 +38,10 @@ const DeleteImagesForm: FunctionComponent<ComponentListing> = ({listing}): React
     setSelected
   ] = useState<string[]>([])
   const handleDeleteOne: Function = async (imageId: string): Promise<void> => {
-    const response = await deleteImageFromListing({
+    const {error} = await deleteImageFromListing({
       id: id!,
       imageId
     })
-    const {error} = response
     if (error) {
       toast.error(error.toString())
     } else {
@@ -76,13 +75,13 @@ const DeleteImagesForm: FunctionComponent<ComponentListing> = ({listing}): React
       <div className='flex justify-center mb-4 gap-2'>
         <button
           className='bg-red-500 text-white px-4 py-2 rounded-md mr-2'
-          onClick={handleDeleteAll.bind(null)}
+          onClick={handleDeleteAll}
         >
           Delete All
         </button>
         <button
           className='bg-red-500 text-white px-4 py-2 rounded-md'
-          onClick={handleDeleteSelected.bind(null)}
+          onClick={handleDeleteSelected}
         >
           Delete Selected
         </button>
@@ -97,7 +96,7 @@ const DeleteImagesForm: FunctionComponent<ComponentListing> = ({listing}): React
                     type='checkbox'
                     className='w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2'
                     value={imageIds!.filter((imageId: string): boolean => imageUrl.includes(imageId))}
-                    onChange={handleCheckbox.bind(null)}
+                    onChange={handleCheckbox}
                   />
                   <button onClick={async (): Promise<void> => await handleDeleteOne(imageIds!.filter((imageId: string): boolean => imageUrl.includes(imageId))[0])}>
                     <FaTimes className='text-red-500 hover:text-red-700'/>

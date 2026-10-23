@@ -1,6 +1,7 @@
 'use client'
 import {
   FunctionComponent,
+  MouseEvent,
   MouseEventHandler,
   ReactElement
 } from 'react'
@@ -9,9 +10,9 @@ import Id from '@/types/Id'
 import {useDeleteListingMutation} from '@/redux/slices/listingsApiSlice'
 const DeleteListingButton: FunctionComponent<Id> = ({id}): ReactElement => {
   const [deleteListing] = useDeleteListingMutation()
-  const handleDelete: MouseEventHandler = async (): Promise<void> => {
-    const response = await deleteListing(id)
-    const {error} = response
+  const handleDelete: MouseEventHandler = async (event: MouseEvent): Promise<void> => {
+    event.preventDefault()
+    const {error} = await deleteListing(id)
     if (error) {
       toast.error(error.toString())
     } else {

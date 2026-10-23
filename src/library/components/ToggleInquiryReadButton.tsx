@@ -1,6 +1,7 @@
 'use client'
 import {
   FunctionComponent,
+  MouseEvent,
   MouseEventHandler,
   ReactElement
 } from 'react'
@@ -12,7 +13,8 @@ const ToggleInquiryReadButton: FunctionComponent<ToggInqRdBtnProps> = ({
   isRead
 }): ReactElement => {
   const [toggleInquiryRead] = useToggleInquiryReadMutation()
-  const handleToggle: MouseEventHandler = async (): Promise<void> => {
+  const handleToggle: MouseEventHandler = async (event: MouseEvent): Promise<void> => {
+    event.preventDefault()
     const response = await toggleInquiryRead(id)
     const {
       error,
