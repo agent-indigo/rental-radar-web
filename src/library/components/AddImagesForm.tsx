@@ -15,11 +15,10 @@ const AddImagesForm: FunctionComponent<ComponentListing> = ({listing}): ReactEle
   const {id}: Listing = listing
   const [addImageToListing] = useAddImagesToListingMutation()
   const handleSubmit = async (body: FormData): Promise<void> => {
-    const response = await addImageToListing({
+    const {error} = await addImageToListing({
       id: id!,
       body
     })
-    const {error} = response
     if (error) {
       toast.error(error.toString())
     } else {

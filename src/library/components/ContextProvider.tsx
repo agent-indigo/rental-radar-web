@@ -15,7 +15,7 @@ const ContextProvider: FunctionComponent<PropsWithChildren> = ({children}): Reac
   const {
     data,
     error
-  } = useGetUserDetailsQuery(undefined)
+  } = useGetUserDetailsQuery(null)
   if (error) {
     store.dispatch(clearDetails())
   } else {

@@ -139,11 +139,10 @@ const EditListingForm: FunctionComponent<ComponentListing> = ({listing}): ReactE
       monthlyRate!.toString()
     )
     const body: object = Object.fromEntries(patch.entries())
-    const response = await editListing({
+    const {error} = await editListing({
       id: id!,
       body
     })
-    const {error} = response
     if (error) {
       toast.error(error.toString())
     } else {

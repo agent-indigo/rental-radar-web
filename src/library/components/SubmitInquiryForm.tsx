@@ -20,8 +20,7 @@ const SubmitInquiryForm: FunctionComponent<ComponentListing> = ({listing}): Reac
   const isOwner: boolean = user?.id === ownerId
   const [submitInquiry] = useSubmitInquiryMutation()
   const handleSubmit = async (body: FormData): Promise<void> => {
-    const response = await submitInquiry(body)
-    const {error} = response
+    const {error} = await submitInquiry(body)
     if (error) {
       toast.error(error.toString())
     } else {
