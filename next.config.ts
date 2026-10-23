@@ -33,6 +33,9 @@ const nextConfig: NextConfig = {
         as: '*.css'
       }
     }
+  },
+  experimental: {
+    authInterrupts: true
   }
 }
 export default nextConfig
