@@ -7,7 +7,6 @@ import {Metadata} from 'next'
 import {headers} from 'next/headers'
 import {Model} from 'sequelize'
 import {User} from 'better-auth'
-import {UserWithRole} from 'better-auth/plugins'
 import defaultProfileImage from '@/assets/images/profile.png'
 import UserListingCard from '@/components/UserListingCard'
 import authentication from '@/connectors/authentication'
@@ -37,15 +36,6 @@ const MyListingsPage: FunctionComponent = async (): Promise<ReactElement> => {
     }
   }).then((listings: Model<Listing>[]): Promise<Listing[]> => Promise.all(listings.map(async (listing: Model<Listing>): Promise<Listing> => {
     const id: string | undefined = listing.getDataValue('id')
-    const {
-      name,
-      email
-    }: UserWithRole = await authentication.api.getUser({
-      query: {
-        id: listing.getDataValue('ownerId')
-      },
-      headers: await headers()
-    })
     return {
       ...listing.toJSON(),
       ownerName: name,

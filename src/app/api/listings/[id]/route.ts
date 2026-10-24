@@ -66,6 +66,7 @@ export const PATCH = async (
     })
     if (session) {
       const {id: listingId} = await params
+      await connectToSqlDb()
       const listing: Model<Listing> | null = await listingSqlModel.findByPk(listingId)
       if (listing) {
         const {id: userId} = session.user
