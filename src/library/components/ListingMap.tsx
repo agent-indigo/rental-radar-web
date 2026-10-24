@@ -2,8 +2,6 @@
 import {
   FunctionComponent,
   ReactElement,
-  useEffect,
-  useState
 } from 'react'
 import {toast} from 'react-toastify'
 import {
@@ -14,45 +12,23 @@ import {
 import {LatLngLiteral} from '@googlemaps/google-maps-services-js'
 import Spinner from '@/components/Spinner'
 import ComponentListing from '@/types/ComponentListing'
+import {useGeolocateListingQuery} from '@/redux/slices/listingsApiSlice'
 import Listing from '@/types/Listing'
 const ListingMap: FunctionComponent<ComponentListing> = ({listing}): ReactElement => {
   const {id}: Listing = listing
-  const [
+  const {
+    data,
+    isFetching,
+    error
+  } = useGeolocateListingQuery(id!)
+  if (error) toast.error(error.toString())
+  const {
     lat,
-    setLat
-  ] = useState<number>(0)
-  const [
-    lng,
-    setLng
-  ] = useState<number>(0)
-  const [
-    loading,
-    setLoading
-  ] = useState<boolean>(true)
-  const [
-    errorOccured,
-    setErrorOccured
-  ] = useState<boolean>(false)
-  useEffect((): void => {(async (): Promise<void> => {
-    const response: Response = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/properties/${id}/geolocate`)
-    if (response.ok) {
-      const {
-        lat,
-        lng
-      }: LatLngLiteral = await response.json()
-      setLat(lat)
-      setLng(lng)
-    } else {
-      toast.error(await response.text())
-      setErrorOccured(true)
-    }
-    setLoading(false)
-  })()}, [
-    id
-  ])
-  return loading ? (
-    <Spinner loading={loading}/>
-  ) : errorOccured ? (
+    lng
+  }: LatLngLiteral = data
+  return isFetching ? (
+    <Spinner loading={isFetching}/>
+  ) : error ? (
     <h1 className='text-red-500 text-center font-bold'>
       Error geolocating property.
     </h1>

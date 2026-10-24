@@ -78,70 +78,35 @@ const EditListingForm: FunctionComponent<ComponentListing> = ({listing}): ReactE
   const router: AppRouterInstance = useRouter()
   const [editListing] = useEditListingMutation()
   const handleCheckbox: ChangeEventHandler = (event: ChangeEvent<HTMLInputElement>): void => {
-    event.preventDefault()
     setAmenities((amenities: string[]): string[] => event.target.checked ? [
       ...amenities,
       event.target.value
     ] : amenities.filter((amenity: string): boolean => amenity !== event.target.value))
   }
   const handleSubmit = async (): Promise<void> => {
-    const patch: FormData = new FormData()
-    if (title !== listing.title) patch.append(
-      'title',
-      title
-    )
-    if (type !== listing.type) patch.append(
-      'type',
-      type
-    )
-    if (description !== listing.description) patch.append(
-      'description',
-      description
-    )
-    if (street !== listing.street) patch.append(
-      'street',
-      street
-    )
-    if (city !== listing.city) patch.append(
-      'city',
-      city
-    )
-    if (state !== listing.state) patch.append(
-      'state',
-      state
-    )
-    if (zip !== listing.zip) patch.append(
-      'zip',
-      zip
-    )
-    if (beds !== listing.beds) patch.append(
-      'beds',
-      beds.toString()
-    )
-    if (baths !== listing.baths) patch.append(
-      'baths',
-      baths.toString()
-    )
-    if (sqft !== listing.sqft) patch.append(
-      'sqft',
-      sqft.toString()
-    )
-    if (nightlyRate !== listing.nightlyRate) patch.append(
-      'nightlyRate',
-      nightlyRate!.toString()
-    )
-    if (weeklyRate != listing.weeklyRate) patch.append(
-      'weeklyRate',
-      weeklyRate!.toString()
-    )
-    if (monthlyRate !== listing.monthlyRate) patch.append(
-      'monthlyRate',
-      monthlyRate!.toString()
-    )
-    const body: object = Object.fromEntries(patch.entries())
+    const changes: Partial<Listing> = {}
+    if (title !== listing.title) changes.title = title
+    if (type !== listing.type) changes.type = type
+    if (description !== listing.description) changes.description = description
+    if (street !== listing.street) changes.street = street
+    if (city !== listing.city) changes.city = city
+    if (state !== listing.state) changes.state = state
+    if (zip !== listing.zip) changes.zip = zip
+    if (beds !== listing.beds) changes.beds = beds
+    if (baths !== listing.baths) changes.baths = baths
+    if (sqft !== listing.sqft) changes.sqft = sqft
+    if (nightlyRate !== listing.nightlyRate) changes.nightlyRate = nightlyRate
+    if (weeklyRate !== listing.weeklyRate) changes.weeklyRate = weeklyRate
+    if (monthlyRate !== listing.monthlyRate) changes.monthlyRate = monthlyRate
     const {error} = await editListing({
       id: id!,
-      body
+      body: {
+        ...changes,
+        amenities: amenities.length !== listing.amenities?.length || amenities.some((
+          amenity: string,
+          index: number
+        ): boolean => amenity !== listing.amenities?.[index]) ? amenities : undefined
+      }
     })
     if (error) {
       toast.error(error.toString())

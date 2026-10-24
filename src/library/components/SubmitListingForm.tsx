@@ -12,11 +12,10 @@ const SubmitListingForm: FunctionComponent = (): ReactElement => {
   const router: AppRouterInstance = useRouter()
   const [submitListing] = useSubmitListingMutation()
   const handleSubmit = async (body: FormData): Promise<void> => {
-    const response = await submitListing(body)
     const {
       data,
       error
-    } = response
+    } = await submitListing(body)
     if (error) {
       toast.error(error.toString())
     } else {

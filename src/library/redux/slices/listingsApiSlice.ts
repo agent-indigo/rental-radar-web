@@ -79,7 +79,19 @@ const listingsApiSlice = apiSlice.injectEndpoints({
         url: `/listings/${id},
         method: 'PATCH`,
         body
-      })
+      }),
+      invalidatesTags: [
+        'listing'
+      ]
+    }),
+    geolocateListing: builder.query({
+      query: (id: string) => ({
+        url: `/listings/${id}/geolocate`,
+        method: 'GET'
+      }),
+      providesTags: [
+        'listing'
+      ]
     })
   })
 })
@@ -94,5 +106,7 @@ export const {
   useLazyGetListingBookmarkedStatusQuery,
   useGetListingFeaturedStatusQuery,
   useLazyGetListingFeaturedStatusQuery,
-  useEditListingMutation
+  useEditListingMutation,
+  useGeolocateListingQuery,
+  useLazyGeolocateListingQuery
 } = listingsApiSlice

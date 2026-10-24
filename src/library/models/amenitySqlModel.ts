@@ -15,7 +15,8 @@ const amenitySqlModel: ModelStatic<Model<Amenity>> = sequelize.models.amenity ??
       references: {
         model: 'listing',
         key: 'id'
-      }
+      },
+      onDelete: 'CASCADE'
     },
     amenity: {
       type: DataTypes.STRING,

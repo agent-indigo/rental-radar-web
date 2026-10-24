@@ -15,7 +15,8 @@ const imageIdSqlModel: ModelStatic<Model<ImageId>> = sequelize.models.imageId ??
       references: {
         model: 'listing',
         key: 'id'
-      }
+      },
+      onDelete: 'CASCADE'
     },
     imageId: {
       type: DataTypes.STRING,

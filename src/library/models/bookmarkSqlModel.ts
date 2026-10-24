@@ -15,7 +15,8 @@ const bookmarkSqlModel: ModelStatic<Model<Bookmark>> = sequelize.models.bookmark
       references: {
         model: 'user',
         key: 'id'
-      }
+      },
+      onDelete: 'CASCADE'
     },
     listingId: {
       type: DataTypes.UUID,
@@ -23,7 +24,8 @@ const bookmarkSqlModel: ModelStatic<Model<Bookmark>> = sequelize.models.bookmark
       references: {
         model: 'listing',
         key: 'id'
-      }
+      },
+      onDelete: 'CASCADE'
     }
   }, {
     timestamps: true

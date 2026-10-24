@@ -22,7 +22,7 @@ const BookmarkButton: FunctionComponent<ComponentListing> = ({listing}): ReactEl
   const {
     data,
     isError,
-    isLoading,
+    isFetching,
     error
   } = useGetListingBookmarkedStatusQuery(id!)
   const [toggleListingBookmarked] = useToggleListingBookmarkedMutation()
@@ -40,8 +40,8 @@ const BookmarkButton: FunctionComponent<ComponentListing> = ({listing}): ReactEl
       toast.success(`Bookmark ${data.isBookmarked ? 'added' : 'removed'}.`)
     }
   }
-  return isLoading ? (
-    <Spinner loading={isLoading}/>
+  return isFetching ? (
+    <Spinner loading={isFetching}/>
   ) : isError ? (
     <h1 className='text-red-500 text-center font-bold'>
       {error.toString()}

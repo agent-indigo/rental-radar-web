@@ -15,11 +15,10 @@ const ToggleInquiryReadButton: FunctionComponent<ToggInqRdBtnProps> = ({
   const [toggleInquiryRead] = useToggleInquiryReadMutation()
   const handleToggle: MouseEventHandler = async (event: MouseEvent): Promise<void> => {
     event.preventDefault()
-    const response = await toggleInquiryRead(id)
     const {
-      error,
-      data
-    } = response
+      data,
+      error
+    } = await toggleInquiryRead(id)
     if (error) {
       toast.error(error.toString())
     } else {

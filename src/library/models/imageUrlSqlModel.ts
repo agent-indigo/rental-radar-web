@@ -15,7 +15,8 @@ const imageUrlSqlModel: ModelStatic<Model<ImageUrl>> = sequelize.models.imageUrl
       references: {
         model: 'listing',
         key: 'id'
-      }
+      },
+      onDelete: 'CASCADE'
     },
     imageUrl: {
       type: DataTypes.STRING,
