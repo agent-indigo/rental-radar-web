@@ -9,6 +9,7 @@ import listingSqlModel from '@/models/listingSqlModel'
 import Inquiry from '@/types/Inquiry'
 import Listing from '@/types/Listing'
 import connectToSqlDb from '@/utilities/connectToSqlDb'
+import { UserWithRole } from 'better-auth/plugins'
 import {revalidatePath} from 'next/cache'
 import {
   NextRequest,
@@ -58,6 +59,43 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
       } else {
         return error400response('send yourself an inquiry on your own listing')
       }
+    } else {
+      return error401response
+    }
+  } catch(error: any) {
+    return error500response(error)
+  }
+}
+export const GET = async (request: NextRequest): Promise<NextResponse> => {
+  try {
+    const session = await authentication.api.getSession({
+      headers: request.headers
+    })
+    if (session) {
+      await connectToSqlDb()
+      return success200response({
+        ...await inquirySqlModel.findAll({
+          where: {
+            recipientId: session.user.id
+          }
+        }).then((inquiries: Model<Inquiry>[]): Promise<Inquiry[]> => Promise.all(inquiries.map(async (inquiry: Model<Inquiry>): Promise<Inquiry> => {
+          const {
+            name,
+            email
+          }: UserWithRole = await authentication.api.getUser({
+            query: {
+              id: inquiry.getDataValue('senderId')
+            },
+            headers: request.headers
+          })
+          return {
+            ...inquiry.toJSON(),
+            listingTitle: await listingSqlModel.findByPk(inquiry.getDataValue('listingId')).then((listing: Model<Listing> | null): string => listing!.getDataValue('title')),
+            senderName: name,
+            senderEmail: email
+          }
+        })))
+      })
     } else {
       return error401response
     }

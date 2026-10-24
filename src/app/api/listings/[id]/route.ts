@@ -3,6 +3,7 @@ import cloudinary from '@/connectors/cloudinary'
 import error401response from '@/httpResponses/error401response'
 import error404response from '@/httpResponses/error404response'
 import error500response from '@/httpResponses/error500response'
+import success200response from '@/httpResponses/success200response'
 import success201response from '@/httpResponses/success201response'
 import success204response from '@/httpResponses/success204response'
 import amenitySqlModel from '@/models/amenitySqlModel'
@@ -160,6 +161,46 @@ export const PATCH = async (
       }
     } else {
       return error401response
+    }
+  } catch(error: any) {
+    return error500response(error)
+  }
+}
+export const GET = async (
+  request: NextRequest,
+  {params}: any
+): Promise<NextResponse> => {
+  try {
+    const {id} = await params
+    await connectToSqlDb()
+    const listing: Model<Listing> | null = await listingSqlModel.findByPk(id)
+    if (listing) {
+      const {
+        name,
+        email
+      }: UserWithRole = await authentication.api.getUser({
+        query: {
+          id: listing.getDataValue('ownerId')
+        },
+        headers: request.headers
+      })
+      return success200response({
+        ...listing.toJSON(),
+        ownerName: name,
+        ownerEmail: email,
+        amenities: await amenitySqlModel.findAll({
+          where: {
+            listingId: id
+          }
+        }).then((amenities: Model<Amenity>[]): string[] => amenities.map((amenity: Model<Amenity>): string => amenity.getDataValue('amenity'))),
+        imageUrls: await imageUrlSqlModel.findAll({
+          where: {
+            listingId: id
+          }
+        }).then((imageUrls: Model<ImageUrl>[]): string[] => imageUrls.map((imageUrl: Model<ImageUrl>): string => imageUrl.getDataValue('imageUrl')))
+      })
+    } else {
+      return error404response
     }
   } catch(error: any) {
     return error500response(error)
