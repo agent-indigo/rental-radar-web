@@ -1,19 +1,19 @@
-import authentication from "@/connectors/authentication"
-import error401response from "@/httpResponses/error401response"
-import error404response from "@/httpResponses/error404response"
-import error500response from "@/httpResponses/error500response"
-import success200response from "@/httpResponses/success200response"
-import bookmarkSqlModel from "@/models/bookmarkSqlModel"
-import listingSqlModel from "@/models/listingSqlModel"
-import Bookmark from "@/types/Bookmark"
-import Listing from "@/types/Listing"
-import connectToSqlDb from "@/utilities/connectToSqlDb"
-import {User} from "better-auth"
+import authentication from '@/connectors/authentication'
+import error401response from '@/httpResponses/error401response'
+import error404response from '@/httpResponses/error404response'
+import error500response from '@/httpResponses/error500response'
+import success200response from '@/httpResponses/success200response'
+import bookmarkSqlModel from '@/models/bookmarkSqlModel'
+import listingSqlModel from '@/models/listingSqlModel'
+import Bookmark from '@/types/Bookmark'
+import Listing from '@/types/Listing'
+import connectToSqlDb from '@/utilities/connectToSqlDb'
+import {User} from 'better-auth'
 import {
   NextRequest,
   NextResponse
-} from "next/server"
-import {Model} from "sequelize"
+} from 'next/server'
+import {Model} from 'sequelize'
 export const dynamic = 'force-dynamic'
 export const PATCH = async (
   request: NextRequest,

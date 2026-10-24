@@ -1,16 +1,16 @@
-import error404response from "@/httpResponses/error404response"
-import error500response from "@/httpResponses/error500response"
-import success200response from "@/httpResponses/success200response"
-import listingSqlModel from "@/models/listingSqlModel"
-import Listing from "@/types/Listing"
-import connectToSqlDb from "@/utilities/connectToSqlDb"
+import error404response from '@/httpResponses/error404response'
+import error500response from '@/httpResponses/error500response'
+import success200response from '@/httpResponses/success200response'
+import listingSqlModel from '@/models/listingSqlModel'
+import Listing from '@/types/Listing'
+import connectToSqlDb from '@/utilities/connectToSqlDb'
 import {
   Client,
   GeocodeResponse,
   GeocodeResponseData
-} from "@googlemaps/google-maps-services-js"
-import {NextResponse} from "next/server"
-import {Model} from "sequelize"
+} from '@googlemaps/google-maps-services-js'
+import {NextResponse} from 'next/server'
+import {Model} from 'sequelize'
 export const dynamic = 'force-dynamic'
 export const GET = async ({params}: any): Promise<NextResponse> => {
   try {
