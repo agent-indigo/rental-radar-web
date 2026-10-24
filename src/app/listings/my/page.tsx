@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 }
 const MyListingsPage: FunctionComponent = async (): Promise<ReactElement> => {
   const {
-    id,
+    id: ownerId,
     name,
     email,
     image
@@ -32,22 +32,22 @@ const MyListingsPage: FunctionComponent = async (): Promise<ReactElement> => {
   await connectToSqlDb()
   const myListings: Listing[] = await listingSqlModel.findAll({
     where: {
-      ownerId: id
+      ownerId
     }
   }).then((listings: Model<Listing>[]): Promise<Listing[]> => Promise.all(listings.map(async (listing: Model<Listing>): Promise<Listing> => {
-    const id: string | undefined = listing.getDataValue('id')
+    const listingId: string | undefined = listing.getDataValue('id')
     return {
       ...listing.toJSON(),
       ownerName: name,
       ownerEmail: email,
       amenities: await amenitySqlModel.findAll({
         where: {
-          listingId: id
+          listingId
         }
       }).then((amenities: Model<Amenity>[]): string[] => amenities.map((amenity: Model<Amenity>): string => amenity.getDataValue('amenity'))),
       imageUrls: await imageUrlSqlModel.findAll({
         where: {
-          listingId: id
+          listingId
         }
       }).then((imageUrls: Model<ImageUrl>[]): string[] => imageUrls.map((imageUrl: Model<ImageUrl>): string => imageUrl.getDataValue('imageUrl')))
     }

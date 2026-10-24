@@ -9,7 +9,7 @@ import listingSqlModel from '@/models/listingSqlModel'
 import Inquiry from '@/types/Inquiry'
 import Listing from '@/types/Listing'
 import connectToSqlDb from '@/utilities/connectToSqlDb'
-import { UserWithRole } from 'better-auth/plugins'
+import {UserWithRole} from 'better-auth/plugins'
 import {revalidatePath} from 'next/cache'
 import {
   NextRequest,
@@ -24,19 +24,19 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
     })
     if (session) {
       const {
-        id,
-        name,
-        email
+        id: senderId,
+        name: senderName,
+        email: senderEmail
       } = session.user
       const formData: FormData = await request.formData()
       const recipientId: string = formData.get('recipientId')!.valueOf().toString()
-      if (recipientId !== id) {
+      if (recipientId !== senderId) {
         const listingId: string = formData.get('listingId')!.valueOf().toString()
         await connectToSqlDb()
         const listing: Model<Listing> | null = await listingSqlModel.findByPk(listingId)
         if (listing) {
           const inquiry: Model<Inquiry> = await inquirySqlModel.create({
-            senderId: id,
+            senderId,
             recipientId,
             listingId,
             senderPhone: formData.get('senderPhone')?.valueOf().toString(),
@@ -49,8 +49,8 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
           )
           return success200response({
             ...inquiry.toJSON(),
-            senderName: name,
-            senderEmail: email,
+            senderName,
+            senderEmail,
             listingTitle: listing.getDataValue('title')
           })
         } else {
@@ -80,8 +80,8 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
           }
         }).then((inquiries: Model<Inquiry>[]): Promise<Inquiry[]> => Promise.all(inquiries.map(async (inquiry: Model<Inquiry>): Promise<Inquiry> => {
           const {
-            name,
-            email
+            name: senderName,
+            email: senderEmail
           }: UserWithRole = await authentication.api.getUser({
             query: {
               id: inquiry.getDataValue('senderId')
@@ -91,8 +91,8 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
           return {
             ...inquiry.toJSON(),
             listingTitle: await listingSqlModel.findByPk(inquiry.getDataValue('listingId')).then((listing: Model<Listing> | null): string => listing!.getDataValue('title')),
-            senderName: name,
-            senderEmail: email
+            senderName,
+            senderEmail
           }
         })))
       })

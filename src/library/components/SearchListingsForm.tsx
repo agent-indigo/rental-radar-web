@@ -5,7 +5,6 @@ import {
   FunctionComponent,
   ReactElement,
   SubmitEvent,
-  SubmitEventHandler,
   useState
 } from 'react'
 import {AppRouterInstance} from 'next/dist/shared/lib/app-router-context.shared-runtime'
@@ -36,13 +35,12 @@ const SearchListingsForm: FunctionComponent = (): ReactElement => {
       ]: value
     }))
   }
-  const handleSubmit: SubmitEventHandler = (event: SubmitEvent): void => {
-    event.preventDefault()
-    router.push(`/listings/search?keywords=${keywords}&type=${type}&page=1`)
-  }
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={(event: SubmitEvent): void => {
+        event.preventDefault()
+        router.push(`/listings/search?keywords=${keywords}&type=${type}&page=1`)
+      }}
       className='mt-3 mx-auto max-w-2xl w-full flex flex-col md:flex-row items-center'
     >
       <div className='w-full md:w-3/5 md:pr-2 mb-4 md:mb-0'>

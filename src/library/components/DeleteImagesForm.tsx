@@ -4,7 +4,6 @@ import {
   ChangeEventHandler,
   FunctionComponent,
   MouseEvent,
-  MouseEventHandler,
   ReactElement,
   useState
 } from 'react'
@@ -51,14 +50,6 @@ const DeleteImagesForm: FunctionComponent<ComponentListing> = ({listing}): React
       if (remaining.length === 0) router.push(`/listing/${id}/images/add`)
     }
   }
-  const handleDeleteAll: MouseEventHandler = async (event: MouseEvent): Promise<void> => {
-    event.preventDefault()
-    await Promise.all(imageIds!.map(async (imageId: string): Promise<void> => await handleDeleteOne(imageId)))
-  }
-  const handleDeleteSelected: MouseEventHandler = async (event: MouseEvent): Promise<void> => {
-    event.preventDefault()
-    await Promise.all(selected.map(async (imageId: string): Promise<void> => await handleDeleteOne(imageId)))
-  }
   const handleCheckbox: ChangeEventHandler = (event: ChangeEvent<HTMLInputElement>): void => {
     event.preventDefault()
     if (event.target.checked) {
@@ -75,13 +66,19 @@ const DeleteImagesForm: FunctionComponent<ComponentListing> = ({listing}): React
       <div className='flex justify-center mb-4 gap-2'>
         <button
           className='bg-red-500 text-white px-4 py-2 rounded-md mr-2'
-          onClick={handleDeleteAll}
+          onClick={async (event: MouseEvent): Promise<void> => {
+            event.preventDefault()
+            await Promise.all(imageIds!.map(async (imageId: string): Promise<void> => await handleDeleteOne(imageId)))
+          }}
         >
           Delete All
         </button>
         <button
           className='bg-red-500 text-white px-4 py-2 rounded-md'
-          onClick={handleDeleteSelected}
+          onClick={async (event: MouseEvent): Promise<void> => {
+            event.preventDefault()
+            await Promise.all(selected.map(async (imageId: string): Promise<void> => await handleDeleteOne(imageId)))
+          }}
         >
           Delete Selected
         </button>

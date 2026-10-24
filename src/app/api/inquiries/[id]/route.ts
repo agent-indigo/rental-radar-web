@@ -36,8 +36,8 @@ export const PATCH = async (
           const {id: userId}: User = session.user
           if (inquiry.getDataValue('recipientId') === userId) {
             const {
-              name,
-              email
+              name: senderName,
+              email: senderEmail
             }: UserWithRole = await authentication.api.getUser({
               query: {
                 id: inquiry.getDataValue('senderId')
@@ -55,8 +55,8 @@ export const PATCH = async (
             )
             return success200response({
               ...inquiry.toJSON(),
-              senderName: name,
-              senderEmail: email,
+              senderName,
+              senderEmail,
               listingTitle: listing.getDataValue('title')
             })
           } else {

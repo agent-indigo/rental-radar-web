@@ -83,40 +83,39 @@ const EditListingForm: FunctionComponent<ComponentListing> = ({listing}): ReactE
       event.target.value
     ] : amenities.filter((amenity: string): boolean => amenity !== event.target.value))
   }
-  const handleSubmit = async (): Promise<void> => {
-    const changes: Partial<Listing> = {}
-    if (title !== listing.title) changes.title = title
-    if (type !== listing.type) changes.type = type
-    if (description !== listing.description) changes.description = description
-    if (street !== listing.street) changes.street = street
-    if (city !== listing.city) changes.city = city
-    if (state !== listing.state) changes.state = state
-    if (zip !== listing.zip) changes.zip = zip
-    if (beds !== listing.beds) changes.beds = beds
-    if (baths !== listing.baths) changes.baths = baths
-    if (sqft !== listing.sqft) changes.sqft = sqft
-    if (nightlyRate !== listing.nightlyRate) changes.nightlyRate = nightlyRate
-    if (weeklyRate !== listing.weeklyRate) changes.weeklyRate = weeklyRate
-    if (monthlyRate !== listing.monthlyRate) changes.monthlyRate = monthlyRate
-    const {error} = await editListing({
-      id: id!,
-      body: {
-        ...changes,
-        amenities: amenities.length !== listing.amenities?.length || amenities.some((
-          amenity: string,
-          index: number
-        ): boolean => amenity !== listing.amenities?.[index]) ? amenities : undefined
-      }
-    })
-    if (error) {
-      toast.error(error.toString())
-    } else {
-      toast.success('Changes saved.')
-      router.push(`/listings/${id}`)
-    }
-  }
   return (
-    <form action={handleSubmit}>
+    <form action={async (): Promise<void> => {
+      const changes: Partial<Listing> = {}
+      if (title !== listing.title) changes.title = title
+      if (type !== listing.type) changes.type = type
+      if (description !== listing.description) changes.description = description
+      if (street !== listing.street) changes.street = street
+      if (city !== listing.city) changes.city = city
+      if (state !== listing.state) changes.state = state
+      if (zip !== listing.zip) changes.zip = zip
+      if (beds !== listing.beds) changes.beds = beds
+      if (baths !== listing.baths) changes.baths = baths
+      if (sqft !== listing.sqft) changes.sqft = sqft
+      if (nightlyRate !== listing.nightlyRate) changes.nightlyRate = nightlyRate
+      if (weeklyRate !== listing.weeklyRate) changes.weeklyRate = weeklyRate
+      if (monthlyRate !== listing.monthlyRate) changes.monthlyRate = monthlyRate
+      const {error} = await editListing({
+        id: id!,
+        body: {
+          ...changes,
+          amenities: amenities.length !== listing.amenities?.length || amenities.some((
+            amenity: string,
+            index: number
+          ): boolean => amenity !== listing.amenities?.[index]) ? amenities : undefined
+        }
+      })
+      if (error) {
+        toast.error(error.toString())
+      } else {
+        toast.success('Changes saved.')
+        router.push(`/listings/${id}`)
+      }
+    }}>
       <h2 className='text-3xl text-center font-semibold mb-6'>
         Edit Listing
       </h2>
@@ -133,7 +132,10 @@ const EditListingForm: FunctionComponent<ComponentListing> = ({listing}): ReactE
           className='border rounded w-full py-2 px-3'
           required
           defaultValue={type}
-          onChange={(event: ChangeEvent<HTMLSelectElement>): void => setType(event.target.value)}
+          onChange={(event: ChangeEvent<HTMLSelectElement>): void => {
+            event.preventDefault()
+            setType(event.target.value)
+          }}
         >
           <option defaultValue='Apartment'>
             Apartment
@@ -172,7 +174,10 @@ const EditListingForm: FunctionComponent<ComponentListing> = ({listing}): ReactE
           className='border rounded w-full py-2 px-3 mb-2'
           required
           defaultValue={title}
-          onChange={(event: ChangeEvent<HTMLInputElement>): void => setTitle(event.target.value)}
+          onChange={(event: ChangeEvent<HTMLInputElement>): void => {
+            event.preventDefault()
+            setTitle(event.target.value)
+          }}
         />
       </div>
       <div className='mb-4'>
@@ -189,7 +194,10 @@ const EditListingForm: FunctionComponent<ComponentListing> = ({listing}): ReactE
           rows={4}
           required
           defaultValue={description}
-          onChange={(event: ChangeEvent<HTMLTextAreaElement>): void => setDescription(event.target.value)}
+          onChange={(event: ChangeEvent<HTMLTextAreaElement>): void => {
+            event.preventDefault()
+            setDescription(event.target.value)
+          }}
         />
       </div>
       <div className='mb-4 bg-blue-50 p-4'>
@@ -207,7 +215,10 @@ const EditListingForm: FunctionComponent<ComponentListing> = ({listing}): ReactE
           placeholder='Street'
           required
           defaultValue={street}
-          onChange={(event: ChangeEvent<HTMLInputElement>): void => setStreet(event.target.value)}
+          onChange={(event: ChangeEvent<HTMLInputElement>): void => {
+            event.preventDefault()
+            setStreet(event.target.value)
+          }}
         />
         <input
           type='text'
@@ -217,7 +228,10 @@ const EditListingForm: FunctionComponent<ComponentListing> = ({listing}): ReactE
           placeholder='City'
           required
           defaultValue={city}
-          onChange={(event: ChangeEvent<HTMLInputElement>): void => setCity(event.target.value)}
+          onChange={(event: ChangeEvent<HTMLInputElement>): void => {
+            event.preventDefault()
+            setCity(event.target.value)
+          }}
         />
         <input
           type='text'
@@ -227,7 +241,10 @@ const EditListingForm: FunctionComponent<ComponentListing> = ({listing}): ReactE
           placeholder='State'
           required
           defaultValue={state}
-          onChange={(event: ChangeEvent<HTMLInputElement>): void => setState(event.target.value)}
+          onChange={(event: ChangeEvent<HTMLInputElement>): void => {
+            event.preventDefault()
+            setState(event.target.value)
+          }}
         />
         <input
           type='text'
@@ -237,7 +254,10 @@ const EditListingForm: FunctionComponent<ComponentListing> = ({listing}): ReactE
           placeholder='Zip Code'
           required
           defaultValue={zip}
-          onChange={(event: ChangeEvent<HTMLInputElement>): void => setZip(event.target.value)}
+          onChange={(event: ChangeEvent<HTMLInputElement>): void => {
+            event.preventDefault()
+            setZip(event.target.value)
+          }}
         />
       </div>
       <div className='mb-4 flex flex-wrap'>
@@ -255,7 +275,10 @@ const EditListingForm: FunctionComponent<ComponentListing> = ({listing}): ReactE
             className='border rounded w-full py-2 px-3'
             required
             defaultValue={beds}
-            onChange={(event: ChangeEvent<HTMLInputElement>): void => setBeds(parseInt(event.target.value))}
+            onChange={(event: ChangeEvent<HTMLInputElement>): void => {
+              event.preventDefault()
+              setBeds(parseInt(event.target.value))
+            }}
           />
         </div>
         <div className='w-full sm:w-1/3 px-2'>
@@ -272,7 +295,10 @@ const EditListingForm: FunctionComponent<ComponentListing> = ({listing}): ReactE
             className='border rounded w-full py-2 px-3'
             required
             defaultValue={baths}
-            onChange={(event: ChangeEvent<HTMLInputElement>): void => setBaths(parseFloat(event.target.value))}
+            onChange={(event: ChangeEvent<HTMLInputElement>): void => {
+              event.preventDefault()
+              setBaths(parseFloat(event.target.value))
+            }}
           />
         </div>
         <div className='w-full sm:w-1/3 pl-2'>
@@ -289,7 +315,10 @@ const EditListingForm: FunctionComponent<ComponentListing> = ({listing}): ReactE
             className='border rounded w-full py-2 px-3'
             required
             defaultValue={sqft}
-            onChange={(event: ChangeEvent<HTMLInputElement>): void => setSqft(parseFloat(event.target.value))}
+            onChange={(event: ChangeEvent<HTMLInputElement>): void => {
+              event.preventDefault()
+              setSqft(parseFloat(event.target.value))
+            }}
           />
         </div>
       </div>
@@ -534,7 +563,10 @@ const EditListingForm: FunctionComponent<ComponentListing> = ({listing}): ReactE
               name='weeklyRate'
               className='border rounded w-full py-2 px-3'
               defaultValue={weeklyRate}
-              onChange={(event: ChangeEvent<HTMLInputElement>): void => setWeeklyRate(parseFloat(event.target.value))}
+              onChange={(event: ChangeEvent<HTMLInputElement>): void => {
+                event.preventDefault()
+                setWeeklyRate(parseFloat(event.target.value))
+              }}
             />
           </div>
           <div className='flex items-center'>
@@ -550,7 +582,10 @@ const EditListingForm: FunctionComponent<ComponentListing> = ({listing}): ReactE
               name='monthlyRate'
               className='border rounded w-full py-2 px-3'
               defaultValue={monthlyRate}
-              onChange={(event: ChangeEvent<HTMLInputElement>): void => setMonthlyRate(parseFloat(event.target.value))}
+              onChange={(event: ChangeEvent<HTMLInputElement>): void => {
+                event.preventDefault()
+                setMonthlyRate(parseFloat(event.target.value))
+              }}
             />
           </div>
           <div className='flex items-center'>
@@ -566,7 +601,10 @@ const EditListingForm: FunctionComponent<ComponentListing> = ({listing}): ReactE
               name='nightlyRate'
               className='border rounded w-full py-2 px-3'
               defaultValue={nightlyRate}
-              onChange={(event: ChangeEvent<HTMLInputElement>): void => setNightlyRate(parseFloat(event.target.value))}
+              onChange={(event: ChangeEvent<HTMLInputElement>): void => {
+                event.preventDefault()
+                setNightlyRate(parseFloat(event.target.value))
+              }}
             />
           </div>
         </div>
@@ -584,7 +622,10 @@ const EditListingForm: FunctionComponent<ComponentListing> = ({listing}): ReactE
           name='ownerPhone'
           className='border rounded w-full py-2 px-3'
           defaultValue={ownerPhone}
-          onChange={(event: ChangeEvent<HTMLInputElement>): void => setOwnerPhone(event.target.value)}
+          onChange={(event: ChangeEvent<HTMLInputElement>): void => {
+            event.preventDefault()
+            setOwnerPhone(event.target.value)
+          }}
         />
       </div>
       <div>

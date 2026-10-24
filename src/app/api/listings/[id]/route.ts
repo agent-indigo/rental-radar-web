@@ -105,8 +105,8 @@ export const PATCH = async (
           if (monthlyRate !== undefined) changes.monthlyRate = monthlyRate
           if (ownerPhone !== undefined) changes.ownerPhone = ownerPhone
           const {
-            name,
-            email
+            name: ownerName,
+            email: ownerEmail
           }: UserWithRole = await authentication.api.getUser({
             query: {
               id: listing.getDataValue('ownerId')
@@ -140,8 +140,8 @@ export const PATCH = async (
           )
           return success201response({
             ...listing.toJSON(),
-            ownerName: name,
-            ownerEmail: email,
+            ownerName,
+            ownerEmail,
             amenities: await amenitySqlModel.findAll({
               where: {
                 listingId

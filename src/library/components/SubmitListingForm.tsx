@@ -11,20 +11,19 @@ import {useSubmitListingMutation} from '@/redux/slices/listingsApiSlice'
 const SubmitListingForm: FunctionComponent = (): ReactElement => {
   const router: AppRouterInstance = useRouter()
   const [submitListing] = useSubmitListingMutation()
-  const handleSubmit = async (body: FormData): Promise<void> => {
-    const {
-      data,
-      error
-    } = await submitListing(body)
-    if (error) {
-      toast.error(error.toString())
-    } else {
-      toast.success('Listing posted.')
-      router.push(`/listings/${data.id}`)
-    }
-  }
   return (
-    <form action={handleSubmit}>
+    <form action={async (body: FormData): Promise<void> => {
+      const {
+        data,
+        error
+      } = await submitListing(body)
+      if (error) {
+        toast.error(error.toString())
+      } else {
+        toast.success('Listing posted.')
+        router.push(`/listings/${data.id}`)
+      }
+    }}>
       <h2 className='text-3xl text-center font-semibold mb-6'>
         Submit Listing
       </h2>

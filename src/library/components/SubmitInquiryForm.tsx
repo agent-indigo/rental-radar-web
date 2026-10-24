@@ -19,21 +19,20 @@ const SubmitInquiryForm: FunctionComponent<ComponentListing> = ({listing}): Reac
   const user: User | undefined = useSelector((state: ContextProps): User | undefined => state.user.details)
   const isOwner: boolean = user?.id === ownerId
   const [submitInquiry] = useSubmitInquiryMutation()
-  const handleSubmit = async (body: FormData): Promise<void> => {
-    const {error} = await submitInquiry(body)
-    if (error) {
-      toast.error(error.toString())
-    } else {
-      toast.success('Inquiry submitted.')
-    }
-  }
   return (
     <>
       <h3 className='text-xl text-center font-bold py-1'>
         {user ? isOwner ? 'This is one of your listings.' : 'Inquiry Form' : 'Sign in to inquire.'}
       </h3>
       {user && !isOwner && (
-        <form action={handleSubmit}>
+        <form action={async (body: FormData): Promise<void> => {
+          const {error} = await submitInquiry(body)
+          if (error) {
+            toast.error(error.toString())
+          } else {
+            toast.success('Inquiry submitted.')
+          }
+        }}>
           <input
             type='hidden'
             id='listingId'

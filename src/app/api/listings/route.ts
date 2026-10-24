@@ -29,9 +29,9 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
     })
     if (session) {
       const {
-        id,
-        name,
-        email
+        id: ownerId,
+        name: ownerName,
+        email: ownerEmail
       }: User = session.user
       const formData: FormData = await request.formData()
       const amenities: string[] = formData.getAll('amenities').map((amenity: FormDataEntryValue): string => amenity.valueOf().toString())
@@ -53,7 +53,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
       }))
       await connectToSqlDb()
       const listing: Model<Listing> = await listingSqlModel.create({
-        ownerId: id,
+        ownerId,
         title: formData.get('title')!.valueOf().toString(),
         type: formData.get('type')!.valueOf().toString(),
         description: formData.get('description')!.valueOf().toString(),
@@ -93,8 +93,8 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         ...listing.toJSON(),
         amenities,
         imageUrls,
-        ownerName: name,
-        ownerEmail: email
+        ownerName,
+        ownerEmail
       })
     } else {
       return error401response
@@ -105,13 +105,17 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
 }
 export const GET = async (request: NextRequest): Promise<NextResponse> => {
   try {
+    const page: string = new URL(request.url).searchParams.get('page') ?? ''
     await connectToSqlDb()
     return success200response({
-      ...await listingSqlModel.findAll().then((listings: Model<Listing>[]): Promise<Listing[]> => Promise.all(listings.map(async (listing: Model<Listing>): Promise<Listing> => {
-        const id: string | undefined = listing.getDataValue('id')
+      ...await listingSqlModel.findAll({
+        offset: page === '' ? undefined : (parseInt(page) - 1) * 6,
+        limit: page === '' ? undefined : 6
+      }).then((listings: Model<Listing>[]): Promise<Listing[]> => Promise.all(listings.map(async (listing: Model<Listing>): Promise<Listing> => {
+        const listingId: string | undefined = listing.getDataValue('id')
         const {
-          name,
-          email
+          name: ownerName,
+          email: ownerEmail
         }: UserWithRole = await authentication.api.getUser({
           query: {
             id: listing.getDataValue('ownerId')
@@ -120,16 +124,16 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
         })
         return {
           ...listing.toJSON(),
-          ownerName: name,
-          ownerEmail: email,
+          ownerName,
+          ownerEmail,
           amenities: await amenitySqlModel.findAll({
             where: {
-              listingId: id
+              listingId
             }
           }).then((amenities: Model<Amenity>[]): string[] => amenities.map((amenity: Model<Amenity>): string => amenity.getDataValue('amenity'))),
           imageUrls: await imageUrlSqlModel.findAll({
             where: {
-              listingId: id
+              listingId
             }
           }).then((imageUrls: Model<ImageUrl>[]): string[] => imageUrls.map((imageUrl: Model<ImageUrl>): string => imageUrl.getDataValue('imageUrl')))
         }

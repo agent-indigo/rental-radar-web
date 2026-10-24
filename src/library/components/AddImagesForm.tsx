@@ -14,20 +14,19 @@ const AddImagesForm: FunctionComponent<ComponentListing> = ({listing}): ReactEle
   const router: AppRouterInstance = useRouter()
   const {id}: Listing = listing
   const [addImageToListing] = useAddImagesToListingMutation()
-  const handleSubmit = async (body: FormData): Promise<void> => {
-    const {error} = await addImageToListing({
-      id: id!,
-      body
-    })
-    if (error) {
-      toast.error(error.toString())
-    } else {
-      toast.success('Images added.')
-      router.push(`/listings/${id}`)
-    }
-  }
   return (
-    <form action={handleSubmit}>
+    <form action={async (body: FormData): Promise<void> => {
+      const {error} = await addImageToListing({
+        id: id!,
+        body
+      })
+      if (error) {
+        toast.error(error.toString())
+      } else {
+        toast.success('Images added.')
+        router.push(`/listings/${id}`)
+      }
+    }}>
       <h2 className='text-3xl text-center font-semibold mb-6'>
         Add Images
       </h2>

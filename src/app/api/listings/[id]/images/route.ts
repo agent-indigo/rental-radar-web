@@ -58,8 +58,8 @@ export const POST = async (
             }
           }))
           const {
-            name,
-            email
+            name: ownerName,
+            email: ownerEmail
           }: UserWithRole = await authentication.api.getUser({
             query: {
               id: listing.getDataValue('ownerId')
@@ -72,8 +72,8 @@ export const POST = async (
           )
           return success200response({
             ...listing.toJSON(),
-            ownerName: name,
-            ownerEmail: email,
+            ownerName,
+            ownerEmail,
             amenities: await amenitySqlModel.findAll({
               where: {
                 listingId

@@ -2,7 +2,6 @@
 import {
   FunctionComponent,
   MouseEvent,
-  MouseEventHandler,
   ReactElement,
   useState
 } from 'react'
@@ -29,12 +28,6 @@ const Navigation: FunctionComponent = (): ReactElement => {
     profileMenuIsOpen,
     setProfileMenuIsOpen
   ] = useState<boolean>(false)
-  const handleSignOut: MouseEventHandler = async (event: MouseEvent): Promise<void> => {
-    event.preventDefault()
-    setProfileMenuIsOpen(false)
-    await authenticationClient.signOut()
-    store.dispatch(clearDetails())
-  }
   const pathname: string = usePathname()
   return (
     <nav className='bg-blue-700 border-b border-blue-500'>
@@ -48,7 +41,10 @@ const Navigation: FunctionComponent = (): ReactElement => {
               className='relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white'
               aria-controls='mobile-menu'
               aria-expanded='false'
-              onClick={(): void => setMobileMenuIsOpen((previousValue: boolean): boolean => !previousValue)}
+              onClick={(event: MouseEvent): void => {
+                event.preventDefault()
+                setMobileMenuIsOpen((previousValue: boolean): boolean => !previousValue)}
+              }
             >
               <span className='absolute -inset-0.5'/>
               <span className='sr-only'>
@@ -153,7 +149,10 @@ const Navigation: FunctionComponent = (): ReactElement => {
                     id='user-menu-button'
                     aria-expanded='false'
                     aria-haspopup='true'
-                    onClick={():void => setProfileMenuIsOpen((previousValue: boolean): boolean => !previousValue)}
+                    onClick={(event: MouseEvent):void => {
+                      event.preventDefault()
+                      setProfileMenuIsOpen((previousValue: boolean): boolean => !previousValue)
+                    }}
                   >
                     <span className='absolute -inset-1.5'/>
                     <span className='sr-only'>
@@ -184,7 +183,10 @@ const Navigation: FunctionComponent = (): ReactElement => {
                       role='menuitem'
                       tabIndex={-1}
                       id='user-menu-item-0'
-                      onClick={(): void => setProfileMenuIsOpen(false)}
+                      onClick={(event: MouseEvent): void => {
+                        event.preventDefault()
+                        setProfileMenuIsOpen(false)
+                      }}
                     >
                       My Listings
                     </Link>
@@ -194,7 +196,10 @@ const Navigation: FunctionComponent = (): ReactElement => {
                       role='menuitem'
                       tabIndex={-1}
                       id='user-menu-item-2'
-                      onClick={(): void => setProfileMenuIsOpen(false)}
+                      onClick={(event :MouseEvent): void => {
+                        event.preventDefault()
+                        setProfileMenuIsOpen(false)
+                      }}
                     >
                       Bookmarked Listings
                     </Link>
@@ -204,7 +209,12 @@ const Navigation: FunctionComponent = (): ReactElement => {
                       role='menuitem'
                       tabIndex={-1}
                       id='user-menu-item-2'
-                      onClick={handleSignOut}
+                      onClick={async (event: MouseEvent): Promise<void> => {
+                        event.preventDefault()
+                        setProfileMenuIsOpen(false)
+                        await authenticationClient.signOut()
+                        store.dispatch(clearDetails())
+                      }}
                     >
                       Sign Out
                     </Link>

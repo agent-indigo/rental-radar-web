@@ -32,10 +32,10 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
           }
         }).then((bookmarks: Model<Bookmark>[]): Promise<Listing[]> => Promise.all(bookmarks.map(async (bookmark: Model<Bookmark>): Promise<Listing> => {
           const listing: Model<Listing> | null = await listingSqlModel.findByPk(bookmark.getDataValue('listingId'))
-          const id: string | undefined = listing?.getDataValue('id')
+          const listingId: string | undefined = listing?.getDataValue('id')
           const {
-            name,
-            email
+            name: ownerName,
+            email: ownerEmail
           }: UserWithRole = await authentication.api.getUser({
             query: {
               id: listing!.getDataValue('ownerId')
@@ -44,16 +44,16 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
           })
           return {
             ...listing!.toJSON(),
-            ownerName: name,
-            ownerEmail: email,
+            ownerName,
+            ownerEmail,
             amenities: await amenitySqlModel.findAll({
               where: {
-                listingId: id
+                listingId
               }
             }).then((amenities: Model<Amenity>[]): string[] => amenities.map((amenity: Model<Amenity>): string => amenity.getDataValue('amenity'))),
             imageUrls: await imageUrlSqlModel.findAll({
               where: {
-                listingId: id
+                listingId
               }
             }).then((imageUrls: Model<ImageUrl>[]): string[] => imageUrls.map((imageUrl: Model<ImageUrl>): string => imageUrl.getDataValue('imageUrl')))
           }

@@ -37,8 +37,8 @@ export const DELETE = async (
       if (listing) {
         const {
           id: userId,
-          name,
-          email
+          name: ownerName,
+          email: ownerEmail
         } = session.user
         if (listing.getDataValue('ownerId') === userId) {
           await imageUrlSqlModel.findAll({
@@ -61,8 +61,8 @@ export const DELETE = async (
           )
           return success201response({
             ...listing.toJSON(),
-            ownerName: name,
-            ownerEmail: email,
+            ownerName,
+            ownerEmail,
             amenities: await amenitySqlModel.findAll({
               where: {
                 listingId

@@ -48,10 +48,10 @@ const SearchResultsPage: FunctionComponent<any> = async ({searchParams}): Promis
       } : {})
     }
   }).then((results: Model<Listing>[]): Promise<Listing[]> => Promise.all(results.map(async (result: Model<Listing>): Promise<Listing> => {
-    const id: string | undefined = result.getDataValue('id')
+    const listingId: string | undefined = result.getDataValue('id')
     const {
-      name,
-      email
+      name: ownerName,
+      email: ownerEmail
     }: UserWithRole = await authentication.api.getUser({
       query: {
         id: result.getDataValue('ownerId')
@@ -60,16 +60,16 @@ const SearchResultsPage: FunctionComponent<any> = async ({searchParams}): Promis
     })
     return {
       ...result.toJSON(),
-      ownerName: name,
-      ownerEmail: email,
+      ownerName,
+      ownerEmail,
       amenities: await amenitySqlModel.findAll({
         where: {
-          listingId: id
+          listingId
         }
       }).then((amenities: Model<Amenity>[]): string[] => amenities.map((amenity: Model<Amenity>): string => amenity.getDataValue('amenity'))),
       imageUrls: await imageUrlSqlModel.findAll({
         where: {
-          listingId: id
+          listingId
         }
       }).then((imageUrls: Model<ImageUrl>[]): string[] => imageUrls.map((imageUrl: Model<ImageUrl>): string => imageUrl.getDataValue('imageUrl')))
     }
