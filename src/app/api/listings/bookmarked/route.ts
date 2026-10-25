@@ -1,5 +1,6 @@
 import authentication from '@/connectors/authentication'
 import error401response from '@/httpResponses/error401response'
+import error404response from '@/httpResponses/error404response'
 import error500response from '@/httpResponses/error500response'
 import success200response from '@/httpResponses/success200response'
 import amenitySqlModel from '@/models/amenitySqlModel'
@@ -17,6 +18,26 @@ import {
   NextResponse
 } from 'next/server'
 import {Model} from 'sequelize'
+export const POST = async (request: NextRequest): Promise<NextResponse> => {
+  try {
+    const session = await authentication.api.getSession({
+      headers: request.headers
+    })
+    if (session) {
+      const {listingId} = await request.json()
+      await connectToSqlDb()
+      const listing: Model<Listing> | null = await listingSqlModel.findByPk(listingId)
+      return listing ? success200response(await bookmarkSqlModel.create({
+        userId: session.user.id,
+        listingId
+      }).then((bookmark: Model<Bookmark>): Bookmark => bookmark.toJSON())) : error404response
+    } else {
+      return error401response
+    }
+  } catch(error: any) {
+    return error500response(error)
+  }
+}
 export const GET = async (request: NextRequest): Promise<NextResponse> => {
   try {
     const session = await authentication.api.getSession({

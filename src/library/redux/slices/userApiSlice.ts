@@ -9,10 +9,33 @@ const userApiSlice = apiSlice.injectEndpoints({
       providesTags: [
         'user'
       ]
+    }),
+    bookmarkListing: builder.mutation({
+      query: (listingId: string) => ({
+        url: `/listings/bookmarked`,
+        method: 'POST',
+        body: {
+          listingId
+        }
+      }),
+      invalidatesTags: [
+        'listing'
+      ]
+    }),
+    deleteBookmark: builder.mutation({
+      query: (id: string) => ({
+        url: `/listings/bookmarked/${id}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: [
+        'listing'
+      ]
     })
   })
 })
 export const {
   useGetUserDetailsQuery,
-  useLazyGetUserDetailsQuery
+  useLazyGetUserDetailsQuery,
+  useBookmarkListingMutation,
+  useDeleteBookmarkMutation
 } = userApiSlice

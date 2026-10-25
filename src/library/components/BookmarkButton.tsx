@@ -9,11 +9,12 @@ import {toast} from 'react-toastify'
 import {useSelector} from 'react-redux'
 import Spinner from '@/components/Spinner'
 import ContextProps from '@/types/ContextProps'
-import User from '@/types/User'
+import {useGetListingBookmarkedStatusQuery} from '@/redux/slices/listingsApiSlice'
 import {
-  useGetListingBookmarkedStatusQuery,
-  useToggleListingBookmarkedMutation
-} from '@/redux/slices/listingsApiSlice'
+  useBookmarkListingMutation,
+  useDeleteBookmarkMutation
+} from '@/redux/slices/userApiSlice'
+import User from '@/types/User'
 import ComponentListing from '@/types/ComponentListing'
 import Listing from '@/types/Listing'
 const BookmarkButton: FunctionComponent<ComponentListing> = ({listing}): ReactElement | null => {
@@ -25,7 +26,8 @@ const BookmarkButton: FunctionComponent<ComponentListing> = ({listing}): ReactEl
     isFetching,
     error
   } = useGetListingBookmarkedStatusQuery(id!)
-  const [toggleListingBookmarked] = useToggleListingBookmarkedMutation()
+  const [bookmarkListing] = useBookmarkListingMutation()
+  const [deleteBookmark] = useDeleteBookmarkMutation()
   const {isBookmarked} = data
   const buttonBg: string = isBookmarked ? 'red' : 'blue'
   return isFetching ? (
@@ -41,14 +43,20 @@ const BookmarkButton: FunctionComponent<ComponentListing> = ({listing}): ReactEl
       disabled={!user}
       onClick={async (event: MouseEvent): Promise<void> => {
         event.preventDefault()
-        const {
-          data,
-          error
-        } = await toggleListingBookmarked(id!)
-        if (error) {
-          toast.error(error.toString())
+        if (isBookmarked) {
+          const {error} = await deleteBookmark(id!)
+          if (error) {
+            toast.error(error.toString())
+          } else {
+            toast.success('Bookmark removed.')
+          }
         } else {
-          toast.success(`Bookmark ${data.isBookmarked ? 'added' : 'removed'}.`)
+          const {error} = await bookmarkListing(id!)
+          if (error) {
+            toast.error(error.toString())
+          } else {
+            toast.success('Bookmark added.')
+          }
         }
       }}
       className={`bg-${buttonBg}-500 hover:bg-${buttonBg}-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center`}

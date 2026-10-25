@@ -29,15 +29,6 @@ const listingsApiSlice = apiSlice.injectEndpoints({
         method: 'DELETE'
       })
     }),
-    toggleListingBookmarked: builder.mutation({
-      query: (id: string) => ({
-        url: `/listings/bookmarked/status/${id}`,
-        method: 'PATCH'
-      }),
-      invalidatesTags: [
-        'listing'
-      ]
-    }),
     toggleListingFeatured: builder.mutation({
       query: (id: string) => ({
         url: `/listings/featured/status/${id}`,
@@ -55,7 +46,7 @@ const listingsApiSlice = apiSlice.injectEndpoints({
     }),
     getListingBookmarkedStatus: builder.query({
       query: (id: string) => ({
-        url: `/listings/bookmarked/status/${id}`,
+        url: `/listings/bookmarked/${id}`,
         method: 'GET'
       }),
       providesTags: [
@@ -99,7 +90,6 @@ export const {
   useSubmitListingMutation,
   useAddImagesToListingMutation,
   useDeleteImageFromListingMutation,
-  useToggleListingBookmarkedMutation,
   useToggleListingFeaturedMutation,
   useDeleteListingMutation,
   useGetListingBookmarkedStatusQuery,
