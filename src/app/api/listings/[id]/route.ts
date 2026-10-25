@@ -12,6 +12,7 @@ import listingSqlModel from '@/models/listingSqlModel'
 import Amenity from '@/types/Amenity'
 import ImageUrl from '@/types/ImageUrl'
 import Listing from '@/types/Listing'
+import RequestParams from '@/types/RequestParams'
 import connectToSqlDb from '@/utilities/connectToSqlDb'
 import {User} from 'better-auth'
 import {UserWithRole} from 'better-auth/plugins'
@@ -23,7 +24,7 @@ import {
 import {Model, Transaction} from 'sequelize'
 export const DELETE = async (
   request: NextRequest,
-  {params}: any
+  {params}: RequestParams
 ): Promise<NextResponse> => {
   try {
     const session = await authentication.api.getSession({
@@ -58,7 +59,7 @@ export const DELETE = async (
 }
 export const PATCH = async (
   request: NextRequest,
-  {params}: any
+  {params}: RequestParams
 ): Promise<NextResponse> => {
   try {
     const session = await authentication.api.getSession({
@@ -167,7 +168,7 @@ export const PATCH = async (
 }
 export const GET = async (
   request: NextRequest,
-  {params}: any
+  {params}: RequestParams
 ): Promise<NextResponse> => {
   try {
     const {id} = await params

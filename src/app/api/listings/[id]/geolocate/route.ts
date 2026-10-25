@@ -3,6 +3,7 @@ import error500response from '@/httpResponses/error500response'
 import success200response from '@/httpResponses/success200response'
 import listingSqlModel from '@/models/listingSqlModel'
 import Listing from '@/types/Listing'
+import RequestParams from '@/types/RequestParams'
 import connectToSqlDb from '@/utilities/connectToSqlDb'
 import {
   Client,
@@ -11,7 +12,7 @@ import {
 } from '@googlemaps/google-maps-services-js'
 import {NextResponse} from 'next/server'
 import {Model} from 'sequelize'
-export const GET = async ({params}: any): Promise<NextResponse> => {
+export const GET = async ({params}: RequestParams): Promise<NextResponse> => {
   try {
     await connectToSqlDb()
     const listing: Model<Listing> | null = await listingSqlModel.findByPk((await params).id)

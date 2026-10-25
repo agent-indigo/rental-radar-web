@@ -8,6 +8,7 @@ import inquirySqlModel from '@/models/inquirySqlModel'
 import listingSqlModel from '@/models/listingSqlModel'
 import Inquiry from '@/types/Inquiry'
 import Listing from '@/types/Listing'
+import RequestParams from '@/types/RequestParams'
 import connectToSqlDb from '@/utilities/connectToSqlDb'
 import {User} from 'better-auth'
 import {UserWithRole} from 'better-auth/plugins'
@@ -19,7 +20,7 @@ import {
 import {Model} from 'sequelize'
 export const PATCH = async (
   request: NextRequest,
-  {params}: any
+  {params}: RequestParams
 ): Promise<NextResponse> => {
   try {
     const session = await authentication.api.getSession({
@@ -76,7 +77,7 @@ export const PATCH = async (
 }
 export const DELETE = async (
   request: NextRequest,
-  {params}: any
+  {params}: RequestParams
 ): Promise<NextResponse> => {
   try {
     const session = await authentication.api.getSession({

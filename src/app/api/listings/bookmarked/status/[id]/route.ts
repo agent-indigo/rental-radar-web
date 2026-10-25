@@ -7,6 +7,7 @@ import bookmarkSqlModel from '@/models/bookmarkSqlModel'
 import listingSqlModel from '@/models/listingSqlModel'
 import Bookmark from '@/types/Bookmark'
 import Listing from '@/types/Listing'
+import RequestParams from '@/types/RequestParams'
 import connectToSqlDb from '@/utilities/connectToSqlDb'
 import {User} from 'better-auth'
 import {
@@ -16,7 +17,7 @@ import {
 import {Model} from 'sequelize'
 export const PATCH = async (
   request: NextRequest,
-  {params}: any
+  {params}: RequestParams
 ): Promise<NextResponse> => {
   try {
     const session = await authentication.api.getSession({

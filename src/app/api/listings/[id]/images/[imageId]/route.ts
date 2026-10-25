@@ -11,6 +11,7 @@ import listingSqlModel from '@/models/listingSqlModel'
 import Amenity from '@/types/Amenity'
 import ImageUrl from '@/types/ImageUrl'
 import Listing from '@/types/Listing'
+import RequestParams from '@/types/RequestParams'
 import connectToSqlDb from '@/utilities/connectToSqlDb'
 import {revalidatePath} from 'next/cache'
 import {
@@ -20,7 +21,7 @@ import {
 import {Model} from 'sequelize'
 export const DELETE = async (
   request: NextRequest,
-  {params}: any
+  {params}: RequestParams
 ): Promise<NextResponse> => {
   try {
     const session = await authentication.api.getSession({
