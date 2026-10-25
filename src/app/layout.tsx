@@ -8,6 +8,7 @@ import {Inter} from 'next/font/google'
 import {NextFont} from 'next/dist/compiled/@next/font'
 import {ToastContainer} from 'react-toastify'
 import ContextProvider from '@/components/ContextProvider'
+import ContextManager from '@/components/ContextManager'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import 'react-toastify/dist/ReactToastify.css'
@@ -33,6 +34,7 @@ const RootLayout: FunctionComponent<PropsWithChildren> = ({children}): ReactElem
           {children}
         </main>
         <Footer/>
+        <ContextManager/>
         <ToastContainer/>
       </body>
     </html>

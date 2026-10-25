@@ -7,6 +7,7 @@ import {admin} from 'better-auth/plugins'
 import {nextCookies} from 'better-auth/next-js'
 import {Pool} from 'pg'
 const authentication = betterAuth({
+  baseURL: process.env.BETTER_AUTH_URL,
   advanced: {
     database: {
       generateId: (): UUID => randomUUID()
@@ -24,6 +25,7 @@ const authentication = betterAuth({
     admin(),
     nextCookies()
   ],
+  secret: process.env.BETTER_AUTH_SECRET,
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID ?? '',

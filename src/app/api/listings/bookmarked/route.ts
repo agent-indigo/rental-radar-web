@@ -17,7 +17,6 @@ import {
   NextResponse
 } from 'next/server'
 import {Model} from 'sequelize'
-export const dynamic = 'force-dynamic'
 export const GET = async (request: NextRequest): Promise<NextResponse> => {
   try {
     const session = await authentication.api.getSession({

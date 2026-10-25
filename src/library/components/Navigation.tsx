@@ -76,6 +76,7 @@ const Navigation: FunctionComponent = (): ReactElement => {
                 className='h-10 w-auto'
                 src={logo}
                 alt='Rental Radar'
+                loading='eager'
               />
               <span className='hidden md:block text-white text-2xl font-bold ml-2'>
                 Rental Radar

@@ -16,7 +16,6 @@ import {
   Op,
   Model
 } from 'sequelize'
-export const dynamic = 'force-dynamic'
 export const GET = async (request: NextRequest): Promise<NextResponse> => {
   try {
     const {searchParams}: URL = new URL(request.url)

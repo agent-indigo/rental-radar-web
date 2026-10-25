@@ -17,7 +17,6 @@ import {
   NextResponse
 } from 'next/server'
 import {Model} from 'sequelize'
-export const dynamic = 'force-dynamic'
 export const PATCH = async (
   request: NextRequest,
   {params}: any

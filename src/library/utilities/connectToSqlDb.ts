@@ -11,6 +11,7 @@ const connectToSqlDb: Function = async (): Promise<void> => {
     console.log('Schema successfully synchronized.')
   } catch (error: any) {
     console.error(error.toString())
+    throw error
   }
 }
 export default connectToSqlDb

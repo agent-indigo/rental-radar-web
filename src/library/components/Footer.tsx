@@ -5,7 +5,7 @@ import {
   ReactElement
 } from 'react'
 import logo from '@/assets/images/logo.png'
-const Footer: FunctionComponent = (): ReactElement =>  (
+const Footer: FunctionComponent = async (): Promise<ReactElement> => (
   <footer className='bg-gray-200 py-4 mt-24'>
     <div className='container mx-auto flex flex-col md:flex-row items-center justify-between px-4'>
       <div className='mb-4 md:mb-0'>
@@ -19,7 +19,7 @@ const Footer: FunctionComponent = (): ReactElement =>  (
       </div>
       <div>
         <p className='text-sm text-gray-500 mt-2 md:mt-0'>
-          &copy; {new Date().getFullYear()} RentalRadar. All rights reserved.
+          &copy; 2026 RentalRadar. All rights reserved.
         </p>
       </div>
     </div>

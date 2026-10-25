@@ -11,7 +11,6 @@ import {
 } from '@googlemaps/google-maps-services-js'
 import {NextResponse} from 'next/server'
 import {Model} from 'sequelize'
-export const dynamic = 'force-dynamic'
 export const GET = async ({params}: any): Promise<NextResponse> => {
   try {
     await connectToSqlDb()
