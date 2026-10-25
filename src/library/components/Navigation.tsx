@@ -48,7 +48,7 @@ const Navigation: FunctionComponent = (): ReactElement => {
             >
               <span className='absolute -inset-0.5'/>
               <span className='sr-only'>
-                Open Main Menu
+                Main Menu
               </span>
               <svg
                 className='block h-6 w-6'
@@ -70,7 +70,7 @@ const Navigation: FunctionComponent = (): ReactElement => {
             {/* logo */}
             <Link
               href='/'
-              className='flex flex-shrink-0 items-center'
+              className='flex shrink-0 items-center'
             >
               <Image
                 className='h-10 w-auto'
@@ -157,7 +157,7 @@ const Navigation: FunctionComponent = (): ReactElement => {
                   >
                     <span className='absolute -inset-1.5'/>
                     <span className='sr-only'>
-                      Open User Menu
+                      User Menu
                     </span>
                     <Image
                       className='h-8 w-8 rounded-full'
