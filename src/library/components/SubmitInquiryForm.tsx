@@ -5,26 +5,25 @@ import {
 } from 'react'
 import {toast} from 'react-toastify'
 import SubmitButton from '@/components/SubmitButton'
-import {useSelector} from 'react-redux'
 import {useSubmitInquiryMutation} from '@/redux/slices/inquiriesApiSlice'
-import ContextProps from '@/types/ContextProps'
-import User from '@/types/User'
-import ComponentListing from '@/types/ComponentListing'
 import Listing from '@/types/Listing'
-const SubmitInquiryForm: FunctionComponent<ComponentListing> = ({listing}): ReactElement => {
+import SubmitInquiryFormProps from '@/types/SubmitInquiryFormProps'
+const SubmitInquiryForm: FunctionComponent<SubmitInquiryFormProps> = ({
+  listing,
+  userId
+}): ReactElement => {
   const {
     id,
     ownerId
   }: Listing = listing
-  const user: User | undefined = useSelector((state: ContextProps): User | undefined => state.user.details)
-  const isOwner: boolean = user?.id === ownerId
+  const isOwner: boolean = userId === ownerId
   const [submitInquiry] = useSubmitInquiryMutation()
   return (
     <>
       <h3 className='text-xl text-center font-bold py-1'>
-        {user ? isOwner ? 'This is one of your listings.' : 'Inquiry Form' : 'Sign in to inquire.'}
+        {userId ? isOwner ? 'This is one of your listings.' : 'Inquiry Form' : 'Sign in to inquire.'}
       </h3>
-      {user && !isOwner && (
+      {userId && !isOwner && (
         <form action={async (body: FormData): Promise<void> => {
           const {error} = await submitInquiry(body)
           if (error) {

@@ -90,7 +90,12 @@ const ListingDetailsPage: FunctionComponent<any> = async ({params}): Promise<Rea
                 <ShareButtons listing={listing}/>
               </div>
               <div className='bg-white p-6 rounded-lg shadow-md'>
-                <SubmitInquiryForm listing={listing}/>
+                <SubmitInquiryForm
+                  listing={listing}
+                  userId={(await authentication.api.getSession({
+                    headers: await headers()
+                  }))!.user.id}
+                />
               </div>
             </aside>
           </div>
