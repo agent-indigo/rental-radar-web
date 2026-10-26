@@ -11,7 +11,7 @@ const ListingHeaderImage: FunctionComponent<HeaderProps> = ({imageUrl}): ReactEl
         <Image
           src={imageUrl}
           alt=''
-          className='object-cover h-[400px] w-full'
+          className='object-cover h-100 w-full'
           width={0}
           height={0}
           sizes='100vw'

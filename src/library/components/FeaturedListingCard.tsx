@@ -43,7 +43,7 @@ const FeaturedListingCard: FunctionComponent<ComponentListing> = ({listing}): Re
         <div className='text-gray-600 mb-4'>
           {type}
         </div>
-        <h3 className='absolute top-[10px] left-[10px] bg-white px-4 py-2 rounded-lg text-blue-500 font-bold text-right md:text-center lg:text-right'>
+        <h3 className='absolute top-2.5 left-2.5 bg-white px-4 py-2 rounded-lg text-blue-500 font-bold text-right md:text-center lg:text-right'>
           ${getRateDisplay(listing)}
         </h3>
         <div className='flex justify-center gap-4 text-gray-500 mb-4'>
@@ -74,7 +74,7 @@ const FeaturedListingCard: FunctionComponent<ComponentListing> = ({listing}): Re
           </div>
           <Link
             href={`/listings/${id}`}
-            className='h-[36px] bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center text-sm'
+            className='h-9 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center text-sm'
           >
             Details
           </Link>
