@@ -1,6 +1,6 @@
 'use client'
 import defaultUserImage from '@/assets/images/profile.png'
-import UserMenuProps from '@/types/UserMenuProps'
+import ComponentImageUrl from '@/types/ComponentImageUrl'
 import authenticationClient from '@/utilities/authenticationClient'
 import {AppRouterInstance} from 'next/dist/shared/lib/app-router-context.shared-runtime'
 import Image from 'next/image'
@@ -12,7 +12,7 @@ import {
   ReactElement,
   useState
 } from 'react'
-const UserMenu: FunctionComponent<UserMenuProps> = ({imageUrl}): ReactElement => {
+const UserMenu: FunctionComponent<ComponentImageUrl> = ({imageUrl}): ReactElement => {
   const router: AppRouterInstance = useRouter()
   const [
     userMenuIsOpen,

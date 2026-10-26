@@ -1,3 +1,3 @@
-export default interface UserIsSignedIn {
+export default interface NavMenuProps {
   userIsSignedIn: boolean
 }

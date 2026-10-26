@@ -28,6 +28,9 @@ export const metadata: Metadata = {
 }
 const ListingDetailsPage: FunctionComponent<any> = async ({params}): Promise<ReactElement> => {
   const {id: listingId} = await params
+  const userId: string | undefined = (await authentication.api.getSession({
+    headers: await headers()
+  }))?.user.id
   await connectToSqlDb()
   const listing: Listing | null = await listingSqlModel.findByPk(listingId).then(async (listing: Model<Listing> | null): Promise<Listing | null> => {
     if (listing) {
@@ -82,7 +85,10 @@ const ListingDetailsPage: FunctionComponent<any> = async ({params}): Promise<Rea
           <div className='grid grid-cols-1 md:grid-cols-70/30 w-full gap-6'>
             <ListingDetails listing={listing}/>
             <aside className='space-y-4'>
-              <BookmarkButton listing={listing}/>
+              <BookmarkButton
+                listing={listing}
+                userId={userId}
+              />
               <h3 className='text-xl font-bold text-center pt-2'>
                 Share
               </h3>
@@ -92,9 +98,7 @@ const ListingDetailsPage: FunctionComponent<any> = async ({params}): Promise<Rea
               <div className='bg-white p-6 rounded-lg shadow-md'>
                 <SubmitInquiryForm
                   listing={listing}
-                  userId={(await authentication.api.getSession({
-                    headers: await headers()
-                  }))!.user.id}
+                  userId={userId}
                 />
               </div>
             </aside>

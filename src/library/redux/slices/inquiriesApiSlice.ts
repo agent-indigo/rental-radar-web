@@ -12,19 +12,13 @@ const inquriesApiSlice = apiSlice.injectEndpoints({
       query: (id: string) => ({
         url: `/inquiries/${id}`,
         method: 'PATCH'
-      }),
-      invalidatesTags: [
-        'user'
-      ]
+      })
     }),
     deleteInquiry: builder.mutation({
       query: (id: string) => ({
         url: `/inquiries/${id}`,
         method: 'DELETE'
-      }),
-      invalidatesTags: [
-        'user'
-      ]
+      })
     })
   })
 })

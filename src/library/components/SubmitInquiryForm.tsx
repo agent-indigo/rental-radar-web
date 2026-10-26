@@ -7,8 +7,8 @@ import {toast} from 'react-toastify'
 import SubmitButton from '@/components/SubmitButton'
 import {useSubmitInquiryMutation} from '@/redux/slices/inquiriesApiSlice'
 import Listing from '@/types/Listing'
-import SubmitInquiryFormProps from '@/types/SubmitInquiryFormProps'
-const SubmitInquiryForm: FunctionComponent<SubmitInquiryFormProps> = ({
+import ListingActionProps from '@/types/ListingActionProps'
+const SubmitInquiryForm: FunctionComponent<ListingActionProps> = ({
   listing,
   userId
 }): ReactElement => {

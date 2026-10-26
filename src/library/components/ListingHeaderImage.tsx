@@ -3,8 +3,8 @@ import {
   FunctionComponent,
   ReactElement
 } from 'react'
-import HeaderProps from '@/types/HeaderProps'
-const ListingHeaderImage: FunctionComponent<HeaderProps> = ({imageUrl}): ReactElement => (
+import ComponentImageUrl from '@/types/ComponentImageUrl'
+const ListingHeaderImage: FunctionComponent<ComponentImageUrl> = ({imageUrl}): ReactElement => (
   <section>
     <div className='container-xl m-auto'>
       <div className='grid grid-cols-1'>
