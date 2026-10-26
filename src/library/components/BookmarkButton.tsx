@@ -9,11 +9,11 @@ import {toast} from 'react-toastify'
 import {useSelector} from 'react-redux'
 import Spinner from '@/components/Spinner'
 import ContextProps from '@/types/ContextProps'
-import {useGetListingBookmarkedStatusQuery} from '@/redux/slices/listingsApiSlice'
 import {
   useBookmarkListingMutation,
-  useDeleteBookmarkMutation
-} from '@/redux/slices/userApiSlice'
+  useDeleteBookmarkMutation,
+  useGetListingBookmarkedStatusQuery,
+} from '@/redux/slices/listingsApiSlice'
 import User from '@/types/User'
 import ComponentListing from '@/types/ComponentListing'
 import Listing from '@/types/Listing'

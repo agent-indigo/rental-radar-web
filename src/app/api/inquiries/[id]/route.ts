@@ -50,8 +50,8 @@ export const PATCH = async (
             )
             await inquiry.save()
             revalidatePath(
-              '/inquiries',
-              'page'
+              '/',
+              'layout'
             )
             return success200response({
               ...inquiry.toJSON(),
@@ -93,8 +93,8 @@ export const DELETE = async (
           if (inquiry.getDataValue('recipientId') === userId) {
             await inquiry.destroy()
             revalidatePath(
-              '/inquiries',
-              'page'
+              '/',
+              'layout'
             )
             return success204response
           } else {

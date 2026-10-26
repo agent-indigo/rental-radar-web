@@ -83,6 +83,27 @@ const listingsApiSlice = apiSlice.injectEndpoints({
       providesTags: [
         'listing'
       ]
+    }),
+    bookmarkListing: builder.mutation({
+      query: (listingId: string) => ({
+        url: `/listings/bookmarked`,
+        method: 'POST',
+        body: {
+          listingId
+        }
+      }),
+      invalidatesTags: [
+        'listing'
+      ]
+    }),
+    deleteBookmark: builder.mutation({
+      query: (id: string) => ({
+        url: `/listings/bookmarked/${id}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: [
+        'listing'
+      ]
     })
   })
 })
@@ -98,5 +119,7 @@ export const {
   useLazyGetListingFeaturedStatusQuery,
   useEditListingMutation,
   useGeolocateListingQuery,
-  useLazyGeolocateListingQuery
+  useLazyGeolocateListingQuery,
+  useBookmarkListingMutation,
+  useDeleteBookmarkMutation
 } = listingsApiSlice
