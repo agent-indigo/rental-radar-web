@@ -7,8 +7,7 @@ const apiSlice = createApi({
     baseUrl: process.env.NEXT_PUBLIC_API_DOMAIN
   }),
   tagTypes: [
-    'listing',
-    'user'
+    'listing'
   ],
   endpoints: () => ({})
 })
