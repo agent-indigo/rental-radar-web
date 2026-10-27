@@ -6,9 +6,7 @@ import {Metadata} from 'next'
 import Link from 'next/link'
 import {FaStop} from 'react-icons/fa'
 export const metadata: Metadata = {
-  title: 'Not Found | Rental Radar | Find the Perfect Rental',
-  description: 'Find the perfect rental property.',
-  keywords: 'find, rental, property'
+  title: 'Unauthorized'
 }
 const UnauthorizedPage: FunctionComponent = (): ReactElement => (
   <section className='bg-blue-50 min-h-screen grow'>
