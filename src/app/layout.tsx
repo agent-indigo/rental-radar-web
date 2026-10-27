@@ -13,9 +13,11 @@ import Footer from '@/components/Footer'
 import 'react-toastify/dist/ReactToastify.css'
 import 'photoswipe/dist/photoswipe.css'
 import '@/assets/styles.css'
-const inter: NextFont = Inter({subsets: [
-  'latin'
-]})
+const inter: NextFont = Inter({
+  subsets: [
+    'latin'
+  ]
+})
 export const metadata: Metadata = {
   title: {
     template: '%s | RentalRadar | Find the Perfect Rental',

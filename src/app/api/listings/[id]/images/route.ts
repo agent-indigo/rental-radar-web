@@ -40,8 +40,8 @@ export const POST = async (
           await Promise.all((await request.formData()).getAll('files').map(async (file: FormDataEntryValue): Promise<void> => {
             if (file instanceof File) {
               const {
-                secure_url,
-                public_id
+                secure_url: imageUrl,
+                public_id: imageId
               }: UploadApiResponse = await cloudinary.uploader.upload(
                 `data:image/png;base64,${Buffer.from(new Uint8Array(await file.arrayBuffer())).toString('base64')}`, {
                   folder: process.env.CLOUDINARY_FOLDER_NAME ?? 'RentalRadar'
@@ -49,11 +49,11 @@ export const POST = async (
               )
               await imageUrlSqlModel.create({
                 listingId,
-                imageUrl: secure_url
+                imageUrl
               })
               await imageIdSqlModel.create({
                 listingId,
-                imageId: public_id
+                imageId
               })
             }
           }))
