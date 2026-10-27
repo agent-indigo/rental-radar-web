@@ -20,7 +20,7 @@ const ListingMap: FunctionComponent<ComponentListing> = ({listing}): ReactElemen
     data,
     isFetching,
     error
-  } = useGeolocateListingQuery(id!)
+  } = useGeolocateListingQuery(id)
   if (error) toast.error(error.toString())
   const {
     lat,

@@ -1,8 +1,8 @@
+import ListingId from '@/types/ListingId'
 import SqlRecord from '@/types/SqlRecord'
-export default  interface Inquiry extends SqlRecord {
+export default  interface Inquiry extends SqlRecord, ListingId {
   senderId: string
   recipientId: string
-  listingId: string
   listingTitle?: string
   senderName?: string
   senderEmail?: string

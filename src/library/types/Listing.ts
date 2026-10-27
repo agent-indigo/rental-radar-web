@@ -1,5 +1,6 @@
+import ImageUrls from '@/types/ImageUrls'
 import SqlRecord from '@/types/SqlRecord'
-export default interface Listing extends SqlRecord {
+export default interface Listing extends SqlRecord, ImageUrls {
   ownerId: string
   title: string
   type: string
@@ -18,7 +19,6 @@ export default interface Listing extends SqlRecord {
   ownerName?: string
   ownerEmail?: string
   ownerPhone?: string
-  imageUrls?: string[]
   imageIds?: string[]
   isFeatured: boolean
 }

@@ -1,5 +1,5 @@
 import sequelize from '@/connectors/sequelize'
-const connectToSqlDb: Function = async (): Promise<void> => {
+const connectToSqlDb = async (): Promise<void> => {
   let isConnected: boolean = false
   if (!isConnected) try {
     await sequelize.authenticate()

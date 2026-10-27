@@ -9,8 +9,7 @@ const eslintConfig: Config[] = defineConfig([
   ...nextVitals,
   ...nextTs, {
     rules: {
-      '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-unsafe-function-type': 'off'
+      '@typescript-eslint/no-explicit-any': 'off'
     }
   },
   globalIgnores([

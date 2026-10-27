@@ -34,7 +34,7 @@ export const POST = async (
       const {id: listingId} = await params
       await connectToSqlDb()
       const listing: Model<Listing> | null = await listingSqlModel.findByPk(listingId)
-      if (listing) {
+      if (listingId && listing) {
         const {id: userId}: User = session.user
         if (listing.getDataValue('ownerId') === userId) {
           await Promise.all((await request.formData()).getAll('files').map(async (file: FormDataEntryValue): Promise<void> => {

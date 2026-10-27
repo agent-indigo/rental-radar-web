@@ -78,6 +78,7 @@ const EditListingForm: FunctionComponent<ComponentListing> = ({listing}): ReactE
   const router: AppRouterInstance = useRouter()
   const [editListing] = useEditListingMutation()
   const handleCheckbox: ChangeEventHandler = (event: ChangeEvent<HTMLInputElement>): void => {
+    event.preventDefault()
     setAmenities((amenities: string[]): string[] => event.target.checked ? [
       ...amenities,
       event.target.value
@@ -100,7 +101,7 @@ const EditListingForm: FunctionComponent<ComponentListing> = ({listing}): ReactE
       if (weeklyRate !== listing.weeklyRate) changes.weeklyRate = weeklyRate
       if (monthlyRate !== listing.monthlyRate) changes.monthlyRate = monthlyRate
       const {error} = await editListing({
-        id: id!,
+        id,
         body: {
           ...changes,
           amenities: amenities.length !== listing.amenities?.length || amenities.some((

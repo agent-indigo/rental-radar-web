@@ -1,5 +1,5 @@
 import Listing from '@/types/Listing'
-const getRateDisplay: Function = (listing: Listing): string | undefined => {
+const getRateDisplay = (listing: Listing): string | undefined => {
   const {
     nightlyRate,
     weeklyRate,

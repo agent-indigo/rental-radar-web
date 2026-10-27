@@ -36,9 +36,9 @@ const DeleteImagesForm: FunctionComponent<ComponentListing> = ({listing}): React
     selected,
     setSelected
   ] = useState<string[]>([])
-  const handleDeleteOne: Function = async (imageId: string): Promise<void> => {
+  const handleDeleteOne = async (imageId: string): Promise<void> => {
     const {error} = await deleteImageFromListing({
-      id: id!,
+      id,
       imageId
     })
     if (error) {

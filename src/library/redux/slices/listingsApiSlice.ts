@@ -30,7 +30,7 @@ const listingsApiSlice = apiSlice.injectEndpoints({
       })
     }),
     toggleListingFeatured: builder.mutation({
-      query: (id: string) => ({
+      query: (id?: string) => ({
         url: `/listings/featured/status/${id}`,
         method: 'PATCH'
       }),
@@ -39,13 +39,13 @@ const listingsApiSlice = apiSlice.injectEndpoints({
       ]
     }),
     deleteListing: builder.mutation({
-      query: (id: string) => ({
+      query: (id?: string) => ({
         url: `/listings/${id}`,
         method: 'delete'
       })
     }),
     getListingBookmarkedStatus: builder.query({
-      query: (id: string) => ({
+      query: (id?: string) => ({
         url: `/listings/bookmarked/${id}`,
         method: 'GET'
       }),
@@ -54,7 +54,7 @@ const listingsApiSlice = apiSlice.injectEndpoints({
       ]
     }),
     getListingFeaturedStatus: builder.query({
-      query: (id: string) => ({
+      query: (id?: string) => ({
         url: `/listings/featured/status/${id}`,
         method: 'GET'
       }),
@@ -76,7 +76,7 @@ const listingsApiSlice = apiSlice.injectEndpoints({
       ]
     }),
     geolocateListing: builder.query({
-      query: (id: string) => ({
+      query: (id?: string) => ({
         url: `/listings/${id}/geolocate`,
         method: 'GET'
       }),
@@ -85,7 +85,7 @@ const listingsApiSlice = apiSlice.injectEndpoints({
       ]
     }),
     bookmarkListing: builder.mutation({
-      query: (listingId: string) => ({
+      query: (listingId?: string) => ({
         url: `/listings/bookmarked`,
         method: 'POST',
         body: {
@@ -97,7 +97,7 @@ const listingsApiSlice = apiSlice.injectEndpoints({
       ]
     }),
     deleteBookmark: builder.mutation({
-      query: (id: string) => ({
+      query: (id?: string) => ({
         url: `/listings/bookmarked/${id}`,
         method: 'DELETE'
       }),

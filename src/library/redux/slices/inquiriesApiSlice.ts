@@ -9,13 +9,13 @@ const inquriesApiSlice = apiSlice.injectEndpoints({
       })
     }),
     toggleInquiryRead: builder.mutation({
-      query: (id: string) => ({
+      query: (id?: string) => ({
         url: `/inquiries/${id}`,
         method: 'PATCH'
       })
     }),
     deleteInquiry: builder.mutation({
-      query: (id: string) => ({
+      query: (id?: string) => ({
         url: `/inquiries/${id}`,
         method: 'DELETE'
       })

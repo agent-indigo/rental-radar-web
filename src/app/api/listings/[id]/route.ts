@@ -69,7 +69,7 @@ export const PATCH = async (
       const {id: listingId} = await params
       await connectToSqlDb()
       const listing: Model<Listing> | null = await listingSqlModel.findByPk(listingId)
-      if (listing) {
+      if (listingId && listing) {
         const {id: userId} = session.user
         if (listing.getDataValue('ownerId') === userId) {
           const {
@@ -126,7 +126,7 @@ export const PATCH = async (
                 },
                 transaction
               })
-              await amenitySqlModel.bulkCreate(amenities.map((amenity: string) => ({
+              await amenitySqlModel.bulkCreate(amenities.map((amenity: string): Amenity => ({
                 listingId,
                 amenity
               })), {

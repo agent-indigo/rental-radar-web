@@ -17,7 +17,7 @@ const AddImagesForm: FunctionComponent<ComponentListing> = ({listing}): ReactEle
   return (
     <form action={async (body: FormData): Promise<void> => {
       const {error} = await addImageToListing({
-        id: id!,
+        id,
         body
       })
       if (error) {

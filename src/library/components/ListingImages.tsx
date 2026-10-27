@@ -10,10 +10,10 @@ import {
 } from 'react-photoswipe-gallery'
 import ImageUrls from '@/types/ImageUrls'
 const ListingImages: FunctionComponent<ImageUrls> = ({imageUrls}): ReactElement => {
-  const imageUrl: string = imageUrls[0]
+  const imageUrl: string = imageUrls![0]
   return (
     <Gallery>
-      {imageUrls.length === 1 ? (
+      {imageUrls!.length === 1 ? (
         <Item
           original={imageUrl}
           thumbnail={imageUrl}
@@ -38,14 +38,14 @@ const ListingImages: FunctionComponent<ImageUrls> = ({imageUrls}): ReactElement 
         </Item>
       ) : (
         <div className='grid grid-cols-2 gap-4'>
-          {imageUrls.map((
+          {imageUrls!.map((
             imageUrl: string,
             index: number
           ): ReactElement => (
             <div
               key={index}
               className={
-                imageUrls.length === 3 && index === 2
+                imageUrls!.length === 3 && index === 2
                 ? 'col-span-2'
                 : 'col-span-1'
               }

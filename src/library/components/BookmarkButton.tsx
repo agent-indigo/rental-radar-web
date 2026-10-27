@@ -43,14 +43,14 @@ const BookmarkButton: FunctionComponent<ListingActionProps> = ({
       onClick={async (event: MouseEvent): Promise<void> => {
         event.preventDefault()
         if (isBookmarked) {
-          const {error} = await deleteBookmark(id!)
+          const {error} = await deleteBookmark(id)
           if (error) {
             toast.error(error.toString())
           } else {
             toast.success('Bookmark removed.')
           }
         } else {
-          const {error} = await bookmarkListing(id!)
+          const {error} = await bookmarkListing(id)
           if (error) {
             toast.error(error.toString())
           } else {

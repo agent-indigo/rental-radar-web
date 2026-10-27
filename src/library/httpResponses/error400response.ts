@@ -1,5 +1,5 @@
 import {NextResponse} from 'next/server'
-const error400response: Function = (action: string): NextResponse => new NextResponse(
+const error400response = (action: string): NextResponse => new NextResponse(
   JSON.stringify({
     message: `You can't ${action}.`
   }), {
