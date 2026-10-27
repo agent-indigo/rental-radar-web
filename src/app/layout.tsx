@@ -20,8 +20,8 @@ const inter: NextFont = Inter({
 })
 export const metadata: Metadata = {
   title: {
-    template: '%s | RentalRadar | Find the Perfect Rental',
-    default: 'PropertyPulse | Find the Perfect Rental'
+    template: '%s | Rental Radar | Find the Perfect Rental',
+    default: 'Rental Radar | Find the Perfect Rental'
   },
   description: 'Find the perfect rental property.',
   keywords: 'find, rental, property'

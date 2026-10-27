@@ -8,7 +8,7 @@ import InfoBoxes from '@/components/InfoBoxes'
 import HomePageListings from '@/components/HomePageListings'
 import FeaturedListings from '@/components/FeaturedListings'
 export const metadata: Metadata = {
-  title: 'Home | RentalRadar | Find the Perfect Rental',
+  title: 'Home | Rental Radar | Find the Perfect Rental',
   description: 'Find the perfect rental property.',
   keywords: 'find, rental, property'
 }

@@ -6,7 +6,7 @@ import {Metadata} from 'next'
 import Link from 'next/link'
 import {FaExclamationTriangle} from 'react-icons/fa'
 export const metadata: Metadata = {
-  title: 'Not Found | RentalRadar | Find the Perfect Rental',
+  title: 'Not Found | Rental Radar | Find the Perfect Rental',
   description: 'Find the perfect rental property.',
   keywords: 'find, rental, property'
 }
