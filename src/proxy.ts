@@ -14,8 +14,8 @@ export const proxy: NextProxy = async (request: NextRequest): Promise<NextRespon
 export const config: ProxyConfig = {
   matcher: [
     '/inquiries',
-    '/listings/add',
     '/listings/my',
+    '/listings/new',
     '/listings/:id/edit',
     '/listings/:id/images/add',
     '/listings/:id/images/delete'
