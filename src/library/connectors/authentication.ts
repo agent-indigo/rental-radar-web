@@ -2,7 +2,7 @@ import {
   randomUUID,
   UUID
 } from 'crypto'
-import {betterAuth} from 'better-auth'
+import {betterAuth} from 'better-auth/minimal'
 import {admin} from 'better-auth/plugins'
 import {nextCookies} from 'better-auth/next-js'
 import {Pool} from 'pg'
