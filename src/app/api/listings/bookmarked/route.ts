@@ -24,7 +24,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
       headers: request.headers
     })
     if (session) {
-      const {listingId} = await request.json()
+      const {listingId}: Bookmark = await request.json()
       await connectToSqlDb()
       const listing: Model<Listing> | null = await listingSqlModel.findByPk(listingId)
       return listing ? success200response(await bookmarkSqlModel.create({
@@ -45,40 +45,38 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
     })
     if (session) {
       await connectToSqlDb()
-      return success200response({
-        ...await bookmarkSqlModel.findAll({
-          where: {
-            userId: session.user.id
-          }
-        }).then((bookmarks: Model<Bookmark>[]): Promise<Listing[]> => Promise.all(bookmarks.map(async (bookmark: Model<Bookmark>): Promise<Listing> => {
-          const listing: Model<Listing> | null = await listingSqlModel.findByPk(bookmark.getDataValue('listingId'))
-          const listingId: string | undefined = listing?.getDataValue('id')
-          const {
-            name: ownerName,
-            email: ownerEmail
-          }: UserWithRole = await authentication.api.getUser({
-            query: {
-              id: listing!.getDataValue('ownerId')
-            },
-            headers: request.headers
-          })
-          return {
-            ...listing!.toJSON(),
-            ownerName,
-            ownerEmail,
-            amenities: await amenitySqlModel.findAll({
-              where: {
-                listingId
-              }
-            }).then((amenities: Model<Amenity>[]): string[] => amenities.map((amenity: Model<Amenity>): string => amenity.getDataValue('amenity'))),
-            imageUrls: await imageUrlSqlModel.findAll({
-              where: {
-                listingId
-              }
-            }).then((imageUrls: Model<ImageUrl>[]): string[] => imageUrls.map((imageUrl: Model<ImageUrl>): string => imageUrl.getDataValue('imageUrl')))
-          }
-        })))
-      })
+      return success200response(await bookmarkSqlModel.findAll({
+        where: {
+          userId: session.user.id
+        }
+      }).then((bookmarks: Model<Bookmark>[]): Promise<Listing[]> => Promise.all(bookmarks.map(async (bookmark: Model<Bookmark>): Promise<Listing> => {
+        const listing: Model<Listing> | null = await listingSqlModel.findByPk(bookmark.getDataValue('listingId'))
+        const listingId: string | undefined = listing?.getDataValue('id')
+        const {
+          name: ownerName,
+          email: ownerEmail
+        }: UserWithRole = await authentication.api.getUser({
+          query: {
+            id: listing!.getDataValue('ownerId')
+          },
+          headers: request.headers
+        })
+        return {
+          ...listing!.toJSON(),
+          ownerName,
+          ownerEmail,
+          amenities: await amenitySqlModel.findAll({
+            where: {
+              listingId
+            }
+          }).then((amenities: Model<Amenity>[]): string[] => amenities.map((amenity: Model<Amenity>): string => amenity.getDataValue('amenity'))),
+          imageUrls: await imageUrlSqlModel.findAll({
+            where: {
+              listingId
+            }
+          }).then((imageUrls: Model<ImageUrl>[]): string[] => imageUrls.map((imageUrl: Model<ImageUrl>): string => imageUrl.getDataValue('imageUrl')))
+        }
+      }))))
     } else {
       return error401response
     }

@@ -10,6 +10,7 @@ import amenitySqlModel from '@/models/amenitySqlModel'
 import imageUrlSqlModel from '@/models/imageUrlSqlModel'
 import listingSqlModel from '@/models/listingSqlModel'
 import Amenity from '@/types/Amenity'
+import Id from '@/types/Id'
 import ImageUrl from '@/types/ImageUrl'
 import Listing from '@/types/Listing'
 import RequestParams from '@/types/RequestParams'
@@ -31,7 +32,7 @@ export const DELETE = async (
       headers: request.headers
     })
     if (session) {
-      const {id: listingId} = await params
+      const {id: listingId}: Id = await params
       await connectToSqlDb()
       const listing: Model<Listing> | null = await listingSqlModel.findByPk(listingId)
       if (listing) {
@@ -66,11 +67,11 @@ export const PATCH = async (
       headers: request.headers
     })
     if (session) {
-      const {id: listingId} = await params
+      const {id: listingId}: Id = await params
       await connectToSqlDb()
       const listing: Model<Listing> | null = await listingSqlModel.findByPk(listingId)
       if (listingId && listing) {
-        const {id: userId} = session.user
+        const {id: userId}: User = session.user
         if (listing.getDataValue('ownerId') === userId) {
           const {
             title,
@@ -171,9 +172,9 @@ export const GET = async (
   {params}: RequestParams
 ): Promise<NextResponse> => {
   try {
-    const {id} = await params
+    const {id: listingId}: Id = await params
     await connectToSqlDb()
-    const listing: Model<Listing> | null = await listingSqlModel.findByPk(id)
+    const listing: Model<Listing> | null = await listingSqlModel.findByPk(listingId)
     if (listing) {
       const {
         name,
@@ -190,12 +191,12 @@ export const GET = async (
         ownerEmail: email,
         amenities: await amenitySqlModel.findAll({
           where: {
-            listingId: id
+            listingId
           }
         }).then((amenities: Model<Amenity>[]): string[] => amenities.map((amenity: Model<Amenity>): string => amenity.getDataValue('amenity'))),
         imageUrls: await imageUrlSqlModel.findAll({
           where: {
-            listingId: id
+            listingId
           }
         }).then((imageUrls: Model<ImageUrl>[]): string[] => imageUrls.map((imageUrl: Model<ImageUrl>): string => imageUrl.getDataValue('imageUrl')))
       })

@@ -106,38 +106,36 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
   try {
     const page: string = new URL(request.url).searchParams.get('page') ?? ''
     await connectToSqlDb()
-    return success200response({
-      ...await listingSqlModel.findAll({
-        offset: page === '' ? undefined : (parseInt(page) - 1) * 6,
-        limit: page === '' ? undefined : 6
-      }).then((listings: Model<Listing>[]): Promise<Listing[]> => Promise.all(listings.map(async (listing: Model<Listing>): Promise<Listing> => {
-        const listingId: string | undefined = listing.getDataValue('id')
-        const {
-          name: ownerName,
-          email: ownerEmail
-        }: UserWithRole = await authentication.api.getUser({
-          query: {
-            id: listing.getDataValue('ownerId')
-          },
-          headers: request.headers
-        })
-        return {
-          ...listing.toJSON(),
-          ownerName,
-          ownerEmail,
-          amenities: await amenitySqlModel.findAll({
-            where: {
-              listingId
-            }
-          }).then((amenities: Model<Amenity>[]): string[] => amenities.map((amenity: Model<Amenity>): string => amenity.getDataValue('amenity'))),
-          imageUrls: await imageUrlSqlModel.findAll({
-            where: {
-              listingId
-            }
-          }).then((imageUrls: Model<ImageUrl>[]): string[] => imageUrls.map((imageUrl: Model<ImageUrl>): string => imageUrl.getDataValue('imageUrl')))
-        }
-      })))
-    })
+    return success200response(await listingSqlModel.findAll({
+      offset: page === '' ? undefined : (parseInt(page) - 1) * 6,
+      limit: page === '' ? undefined : 6
+    }).then((listings: Model<Listing>[]): Promise<Listing[]> => Promise.all(listings.map(async (listing: Model<Listing>): Promise<Listing> => {
+      const listingId: string | undefined = listing.getDataValue('id')
+      const {
+        name: ownerName,
+        email: ownerEmail
+      }: UserWithRole = await authentication.api.getUser({
+        query: {
+          id: listing.getDataValue('ownerId')
+        },
+        headers: request.headers
+      })
+      return {
+        ...listing.toJSON(),
+        ownerName,
+        ownerEmail,
+        amenities: await amenitySqlModel.findAll({
+          where: {
+            listingId
+          }
+        }).then((amenities: Model<Amenity>[]): string[] => amenities.map((amenity: Model<Amenity>): string => amenity.getDataValue('amenity'))),
+        imageUrls: await imageUrlSqlModel.findAll({
+          where: {
+            listingId
+          }
+        }).then((imageUrls: Model<ImageUrl>[]): string[] => imageUrls.map((imageUrl: Model<ImageUrl>): string => imageUrl.getDataValue('imageUrl')))
+      }
+    }))))
   } catch(error: any) {
     return error500response(error)
   }

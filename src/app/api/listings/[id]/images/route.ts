@@ -9,6 +9,7 @@ import imageIdSqlModel from '@/models/imageIdSqlModel'
 import imageUrlSqlModel from '@/models/imageUrlSqlModel'
 import listingSqlModel from '@/models/listingSqlModel'
 import Amenity from '@/types/Amenity'
+import Id from '@/types/Id'
 import ImageUrl from '@/types/ImageUrl'
 import Listing from '@/types/Listing'
 import RequestParams from '@/types/RequestParams'
@@ -31,7 +32,7 @@ export const POST = async (
       headers: request.headers
     })
     if (session) {
-      const {id: listingId} = await params
+      const {id: listingId}: Id = await params
       await connectToSqlDb()
       const listing: Model<Listing> | null = await listingSqlModel.findByPk(listingId)
       if (listingId && listing) {

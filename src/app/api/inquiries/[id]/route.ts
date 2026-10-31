@@ -6,6 +6,7 @@ import success200response from '@/httpResponses/success200response'
 import success204response from '@/httpResponses/success204response'
 import inquirySqlModel from '@/models/inquirySqlModel'
 import listingSqlModel from '@/models/listingSqlModel'
+import Id from '@/types/Id'
 import Inquiry from '@/types/Inquiry'
 import Listing from '@/types/Listing'
 import RequestParams from '@/types/RequestParams'
@@ -27,7 +28,7 @@ export const PATCH = async (
       headers: request.headers
     })
     if (session) {
-      const {id: inquiryId} = await params
+      const {id: inquiryId}: Id = await params
       await connectToSqlDb()
       const inquiry: Model<Inquiry> | null = await inquirySqlModel.findByPk(inquiryId)
       if (inquiry) {
@@ -84,8 +85,8 @@ export const DELETE = async (
       headers: request.headers
     })
     if (session) {
-      const {id: inquiryID} = await params
-      const inquiry  : Model<Inquiry> | null = await inquirySqlModel.findByPk(inquiryID)
+      const {id: inquiryID}: Id = await params
+      const inquiry: Model<Inquiry> | null = await inquirySqlModel.findByPk(inquiryID)
       if (inquiry) {
         const listing: Model<Listing> | null = await listingSqlModel.findByPk(inquiry.getDataValue('listingId'))
         if (listing) {

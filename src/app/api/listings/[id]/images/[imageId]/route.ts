@@ -9,10 +9,12 @@ import imageIdSqlModel from '@/models/imageIdSqlModel'
 import imageUrlSqlModel from '@/models/imageUrlSqlModel'
 import listingSqlModel from '@/models/listingSqlModel'
 import Amenity from '@/types/Amenity'
+import DeleteImageParams from '@/types/DeleteImageParams'
 import ImageUrl from '@/types/ImageUrl'
 import Listing from '@/types/Listing'
 import RequestParams from '@/types/RequestParams'
 import connectToSqlDb from '@/utilities/connectToSqlDb'
+import {User} from 'better-auth'
 import {revalidatePath} from 'next/cache'
 import {
   NextRequest,
@@ -31,7 +33,7 @@ export const DELETE = async (
       const {
         id: listingId,
         imageId
-      } = await params
+      }: DeleteImageParams = await params
       await connectToSqlDb()
       const listing: Model<Listing> | null = await listingSqlModel.findByPk(listingId)
       if (listing) {
@@ -39,7 +41,7 @@ export const DELETE = async (
           id: userId,
           name: ownerName,
           email: ownerEmail
-        } = session.user
+        }: User = session.user
         if (listing.getDataValue('ownerId') === userId) {
           await imageUrlSqlModel.findAll({
             where: {
