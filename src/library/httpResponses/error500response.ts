@@ -6,7 +6,7 @@ const error500response = (error: Error): NextResponse => {
   }: Error = error
   return new NextResponse(
     JSON.stringify({
-      message: message,
+      message,
       stack: process.env.NODE_ENV === 'development' ? stack : undefined
     }), {
       status: 500

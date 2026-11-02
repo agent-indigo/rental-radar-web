@@ -28,24 +28,33 @@ export const metadata: Metadata = {
 }
 const SearchResultsPage: FunctionComponent<any> = async ({searchParams}): Promise<ReactElement> => {
   const {
-    keywords,
+    keywords = '',
     type = 'All',
     page = 1,
     size = 6
   } = await searchParams
   await connectToSqlDb()
-  const normalizedKeywords: string = typeof keywords === 'string' ? keywords.trim() : ''
   const results: Listing[] = await listingSqlModel.findAll({
     where: {
-      ...(type === 'All' ? {} : {type}),
-      ...(normalizedKeywords ? {
-        [Op.or]: [
-          {title: {[Op.iLike]: `%${normalizedKeywords}%`}},
-          {description: {[Op.iLike]: `%${normalizedKeywords}%`}},
-          {city: {[Op.iLike]: `%${normalizedKeywords}%`}},
-          {state: {[Op.iLike]: `%${normalizedKeywords}%`}}
-        ]
-      } : {})
+      type, [
+        Op.or
+      ]: [{
+        title: {[
+          Op.iLike
+        ]: `%${keywords.trim()}%`
+      }}, {
+        description: {[
+          Op.iLike
+        ]: `%${keywords.trim()}%`
+      }}, {
+        city: {[
+          Op.iLike
+        ]: `%${keywords.trim()}%`
+      }}, {
+        state: {[
+          Op.iLike
+        ]: `%${keywords.trim()}%`
+      }}]
     }
   }).then((results: Model<Listing>[]): Promise<Listing[]> => Promise.all(results.map(async (result: Model<Listing>): Promise<Listing> => {
     const listingId: string | undefined = result.getDataValue('id')

@@ -35,7 +35,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
       const formData: FormData = await request.formData()
       const amenities: string[] = formData.getAll('amenities').map((amenity: FormDataEntryValue): string => amenity.valueOf().toString())
       const imageUrls: string[] = []
-      const ImageIds: string[] = []
+      const imageIds: string[] = []
       await Promise.all(formData.getAll('files').map(async (file: FormDataEntryValue): Promise<void> => {
         if (file instanceof File) {
           const {
@@ -47,7 +47,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             }
           )
           imageUrls.push(secure_url)
-          ImageIds.push(public_id)
+          imageIds.push(public_id)
         }
       }))
       await connectToSqlDb()
@@ -79,7 +79,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
           listingId,
           imageUrl
         })))
-        await Promise.all(ImageIds.map(async (imageId: string): Promise<Model<ImageId>> => await imageIdSqlModel.create({
+        await Promise.all(imageIds.map(async (imageId: string): Promise<Model<ImageId>> => await imageIdSqlModel.create({
           listingId,
           imageId
         })))
@@ -104,11 +104,11 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
 }
 export const GET = async (request: NextRequest): Promise<NextResponse> => {
   try {
-    const page: string = new URL(request.url).searchParams.get('page') ?? ''
+    const page: string = new URL(request.url).searchParams.get('page') ?? '1'
     await connectToSqlDb()
     return success200response(await listingSqlModel.findAll({
-      offset: page === '' ? undefined : (parseInt(page) - 1) * 6,
-      limit: page === '' ? undefined : 6
+      offset: (parseInt(page) - 1) * 6,
+      limit: 6
     }).then((listings: Model<Listing>[]): Promise<Listing[]> => Promise.all(listings.map(async (listing: Model<Listing>): Promise<Listing> => {
       const listingId: string | undefined = listing.getDataValue('id')
       const {

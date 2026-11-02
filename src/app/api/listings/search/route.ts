@@ -19,24 +19,33 @@ import {
 export const GET = async (request: NextRequest): Promise<NextResponse> => {
   try {
     const {searchParams}: URL = new URL(request.url)
-    const keywords: string | null = searchParams.get('keywords')
-    const type: string | null = searchParams.get('type')
-    const page: string | null = searchParams.get('page')
-    const normalizedKeywords: string = typeof keywords === 'string' ? keywords.trim() : ''
+    const keywords: string = searchParams.get('keywords')?.trim() ?? ''
+    const type: string = searchParams.get('type') ?? 'All'
+    const page: string = searchParams.get('page') ?? '1'
     return success200response(await listingSqlModel.findAll({
       where: {
-        ...(type === 'All' ? {} : {type: type ?? undefined}),
-        ...(normalizedKeywords ? {
-          [Op.or]: [
-            {title: {[Op.iLike]: `%${normalizedKeywords}%`}},
-            {description: {[Op.iLike]: `%${normalizedKeywords}%`}},
-            {city: {[Op.iLike]: `%${normalizedKeywords}%`}},
-            {state: {[Op.iLike]: `%${normalizedKeywords}%`}}
-          ]
-        } : {})
+        type, [
+          Op.or
+        ]: [{
+          title: {[
+            Op.iLike
+          ]: `%${keywords}%`
+        }}, {
+          description: {[
+            Op.iLike
+          ]: `%${keywords}%`
+        }}, {
+          city: {[
+            Op.iLike
+          ]: `%${keywords}%`
+        }}, {
+          state: {[
+            Op.iLike
+          ]: `%${keywords}%`
+        }}]
       },
-      offset: page === '' ? undefined : (parseInt(page ?? '') - 1) * 6,
-      limit: page === '' ? undefined : 6
+      offset: (parseInt(page) - 1) * 6,
+      limit: 6
     }).then((results: Model<Listing>[]): Promise<Listing[]> => Promise.all(results.map(async (result: Model<Listing>): Promise<Listing> => {
       const listingId: string | undefined = result.getDataValue('id')
       const {
