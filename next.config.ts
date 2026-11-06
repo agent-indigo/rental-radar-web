@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_DOMAIN: url,
     NEXT_PUBLIC_API_DOMAIN: `${url}/api`,
     BETTER_AUTH_URL: url,
-    BETTER_AUTH_SECRET: process.env.NODE_ENV === 'development' ? 'd3v3l0pm3nt53cr3tk3yn0t53cur3@t@11n3v3ru53!npr0duct!0n3v3r!!!' : process.env.AUTH_SECRET
+    BETTER_AUTH_SECRET: process.env.AUTH_SECRET ?? 'd3v3l0pm3nt53cr3tk3yn0t53cur3@t@11n3v3ru53!npr0duct!0n3v3r!!!'
   },
   images: {
     remotePatterns: [{
