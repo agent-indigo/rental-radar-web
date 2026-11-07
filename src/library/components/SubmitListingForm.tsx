@@ -130,6 +130,7 @@ const SubmitListingForm: FunctionComponent = (): ReactElement => {
           name='zip'
           className='border rounded w-full py-2 px-3 mb-2'
           placeholder='Zip Code'
+          required
         />
       </div>
       <div className='mb-4 flex flex-wrap'>
