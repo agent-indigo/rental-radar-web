@@ -21,17 +21,16 @@ const BookmarkButton: FunctionComponent<ListingActionProps> = ({
   const {id}: Listing = listing
   const {
     data,
-    isError,
     isFetching,
     error
-  } = useGetListingBookmarkedStatusQuery(id!)
+  } = useGetListingBookmarkedStatusQuery(id)
   const [bookmarkListing] = useBookmarkListingMutation()
   const [deleteBookmark] = useDeleteBookmarkMutation()
   const {isBookmarked} = data
   const buttonBg: string = isBookmarked ? 'red' : 'blue'
   return isFetching ? (
     <Spinner loading={isFetching}/>
-  ) : isError ? (
+  ) : error ? (
     <h1 className='text-red-500 text-center font-bold'>
       {error.toString()}
     </h1>

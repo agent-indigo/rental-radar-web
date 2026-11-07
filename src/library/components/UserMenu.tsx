@@ -27,7 +27,7 @@ const UserMenu: FunctionComponent<ComponentImageUrl> = ({imageUrl}): ReactElemen
           id='user-menu-button'
           aria-expanded='false'
           aria-haspopup='true'
-          onClick={(event: MouseEvent):void => {
+          onClick={(event: MouseEvent): void => {
             event.preventDefault()
             setUserMenuIsOpen((previousValue: boolean): boolean => !previousValue)
           }}
@@ -74,7 +74,7 @@ const UserMenu: FunctionComponent<ComponentImageUrl> = ({imageUrl}): ReactElemen
             role='menuitem'
             tabIndex={-1}
             id='user-menu-item-2'
-            onClick={(event :MouseEvent): void => {
+            onClick={(event: MouseEvent): void => {
               event.preventDefault()
               setUserMenuIsOpen(false)
             }}
