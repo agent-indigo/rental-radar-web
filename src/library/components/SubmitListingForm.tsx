@@ -192,7 +192,7 @@ const SubmitListingForm: FunctionComponent = (): ReactElement => {
               type='checkbox'
               id='amenity_wifi'
               name='amenities'
-              value='Wifi'
+              value='Wi-Fi'
               className='mr-2'
             />
             <label htmlFor='amenity_wifi'>
@@ -387,7 +387,7 @@ const SubmitListingForm: FunctionComponent = (): ReactElement => {
             <input
               type='number'
               id='weekly_rate'
-              name='rates.weekly'
+              name='weeklyRate'
               className='border rounded w-full py-2 px-3'
             />
           </div>
@@ -401,7 +401,7 @@ const SubmitListingForm: FunctionComponent = (): ReactElement => {
             <input
               type='number'
               id='monthly_rate'
-              name='rates.monthly'
+              name='monthlyRate'
               className='border rounded w-full py-2 px-3'
             />
           </div>
@@ -415,7 +415,7 @@ const SubmitListingForm: FunctionComponent = (): ReactElement => {
             <input
               type='number'
               id='nightly_rate'
-              name='rates.nightly'
+              name='nightlyRate'
               className='border rounded w-full py-2 px-3'
             />
           </div>
