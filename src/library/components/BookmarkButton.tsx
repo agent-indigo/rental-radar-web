@@ -21,8 +21,9 @@ const BookmarkButton: FunctionComponent<ListingActionProps> = ({
   const {id}: Listing = listing
   const {
     data,
+    error,
     isFetching,
-    error
+    refetch
   } = useGetListingBookmarkedStatusQuery(id)
   const [bookmarkListing] = useBookmarkListingMutation()
   const [deleteBookmark] = useDeleteBookmarkMutation()
@@ -47,6 +48,7 @@ const BookmarkButton: FunctionComponent<ListingActionProps> = ({
             toast.error(error.toString())
           } else {
             toast.success('Bookmark removed.')
+            refetch()
           }
         } else {
           const {error} = await bookmarkListing(id)
@@ -54,6 +56,7 @@ const BookmarkButton: FunctionComponent<ListingActionProps> = ({
             toast.error(error.toString())
           } else {
             toast.success('Bookmark added.')
+            refetch()
           }
         }
       }}
